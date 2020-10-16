@@ -9,7 +9,7 @@
     <h3>Answered forms</h3>
     @foreach (var form in Forms.Where(f => f.Status == FormStatus.Answered))
     {
-        <NewForm Form=@form />
+        <AnsweredForm Form=@form />
     }
     <h3>Dismissed forms</h3>
     @foreach (var form in Forms.Where(f => f.Status == FormStatus.Dismissed))

@@ -8,13 +8,15 @@ namespace BlazorFormDesigner.BusinessLogic.Services
     public class AnswerService
     {
         private readonly IAnswerRepository AnswerRepository;
+        private readonly IUserRepository UserRepository;
 
-        public AnswerService(IAnswerRepository answerRepository)
+        public AnswerService(IAnswerRepository answerRepository, IUserRepository userRepository)
         {
             AnswerRepository = answerRepository;
+            UserRepository = userRepository;
         }
 
-        public Task<Response> Save(User user, string formId, List<Answer> answers)
+        public async Task<Response> Save(User user, string formId, List<Answer> answers)
         {
             var response = new Response
             {
@@ -23,7 +25,9 @@ namespace BlazorFormDesigner.BusinessLogic.Services
                 UserId = user.Username
             };
 
-            return AnswerRepository.Create(response);
+            await UserRepository.RegisterAnswer(user.Username, formId);
+
+            return await AnswerRepository.Create(response);
         }
     }
 }

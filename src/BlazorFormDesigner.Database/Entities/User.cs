@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BlazorFormDesigner.Database.Entities
@@ -14,5 +15,11 @@ namespace BlazorFormDesigner.Database.Entities
         public byte[] Salt { get; set; }
 
         public string Name { get; set; }
+
+        public List<string> AnsweredForms { get; set; }
+
+        public List<string> DismissedForms { get; set; }
+
+        public List<string> CreatedForms { get; set; }
     }
 }

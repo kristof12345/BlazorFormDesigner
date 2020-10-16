@@ -15,6 +15,8 @@ namespace BlazorFormDesigner.BusinessLogic.Models
 
         public string Password { get; set; }
 
+        public FormStatus Status { get; set; }
+
         public string CreatorId { get; set; }
 
         public DateTime CreationDate { get; set; }

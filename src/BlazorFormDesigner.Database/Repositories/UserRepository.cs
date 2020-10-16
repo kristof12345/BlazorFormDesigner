@@ -18,6 +18,12 @@ namespace BlazorFormDesigner.Database.Repositories
             users = database.GetCollection<Entities.User>(settings.UsersCollectionName);
         }
 
+        public async Task<User> GetByUsername(string id)
+        {
+            var result = await findByUserame(id);
+            return result.ToModel(mapper);
+        }
+
         public async Task<User> Create(User user, string password)
         {
             if (await findByUserame(user.Username) != null) throw new DuplicateUsernameException(user.Username);
@@ -71,6 +77,16 @@ namespace BlazorFormDesigner.Database.Repositories
         {
             var result = await users.Find(user => user.Username == username).FirstOrDefaultAsync();
             return result;
+        }
+
+        public async Task RegisterAnswer(string username, string formId)
+        {
+            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
+            if (user == null) throw new InvalidUsernameException();
+
+            var entity = user;
+            entity.AnsweredForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
         }
     }
 }

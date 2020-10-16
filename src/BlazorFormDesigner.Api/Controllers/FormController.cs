@@ -22,9 +22,9 @@ namespace BlazorFormDesigner.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<FormResponse>>> GetAll()
         {
-            ValidateUser();
+            var user = ValidateUser();
 
-            var forms = await FormService.GetAll();
+            var forms = await FormService.GetAll(user);
 
             return Ok(forms);
         }

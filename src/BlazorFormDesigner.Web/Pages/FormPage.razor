@@ -20,6 +20,9 @@
     [Inject]
     private AnswerService AnswerService { get; set; }
 
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
     private FormResponse Form { get; set; }
 
     protected override async Task OnParametersSetAsync()
@@ -30,5 +33,6 @@
     private async Task SendAnswer(List<Answer> answers)
     {
         await AnswerService.Save(Form.Id, answers);
+        NavigationManager.NavigateTo("forms");
     }
 }

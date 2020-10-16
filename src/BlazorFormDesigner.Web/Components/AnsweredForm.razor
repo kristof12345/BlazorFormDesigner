@@ -3,11 +3,6 @@
         <MatH4>@Form.Title</MatH4>
         <MatH6 Class="center-text" Style=@($"color: {Colors.Primary};")>@("Created by: " + Form.CreatorId)</MatH6>
         <MatH6 Class="center-text">@Form.Description</MatH6>
-        <Horizontal Height="56px">
-            <MatButton Raised="true" Style="align-self: flex-end;">Dismiss </MatButton>
-            <MatBody1 Style=@($"color: {Colors.Primary}; align-self: flex-end; margin-bottom: 7px;")>@(Form.Questions.Count + " questions")</MatBody1>
-            <MatButton Link=@("/forms/" + Form.Id) Raised="true" Style="align-self: flex-end;">Answer now </MatButton>
-        </Horizontal>
     </Vertical>
 </Paper>
 
