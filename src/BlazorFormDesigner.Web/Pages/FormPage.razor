@@ -1,0 +1,34 @@
+﻿@page "/forms/{id}"
+
+@if (Form != null)
+{
+    <Container Width="1452px" Top="80px" Bottom="70px">
+        <Paper Margin=@(new Border { Top = "10px", Bottom = "30px" }) Padding=@(new Border("120px", "20px"))>
+            <QuestionStepper Questions=@Form.Questions OnFinish=@SendAnswer />
+        </Paper>
+    </Container>
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Inject]
+    private FormService FormService { get; set; }
+
+    [Inject]
+    private AnswerService AnswerService { get; set; }
+
+    private FormResponse Form { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Form = await FormService.GetById(Id);
+    }
+
+    private async Task SendAnswer(List<Answer> answers)
+    {
+        await AnswerService.Save(Form.Id, answers);
+    }
+}

@@ -1,0 +1,56 @@
+﻿<Stepper Steps=@Questions.Select((question) =>question.Title) OnNext=@(() => SelectedIndex++) OnBack=@(() => SelectedIndex--) OnFinish=@Finish>
+    @switch (Questions[SelectedIndex].Type)
+    {
+        case QuestionType.Text:
+            <TextQuestion Question=@Questions[SelectedIndex] Selected=@GetSelected() OnAnswerChange=@AnswerChanged />
+            break;
+        case QuestionType.Numeric:
+            <NumericQuestion Question=@Questions[SelectedIndex] Selected=@GetSelected() OnAnswerChange=@AnswerChanged />
+            break;
+        case QuestionType.SingleChoice:
+            <SingleChoiceQuestion Question=@Questions[SelectedIndex] Selected=@GetSelected() OnAnswerChange=@AnswerChanged />
+            break;
+        case QuestionType.MultipleChoice:
+            <MultipleChoiceQuestion Question=@Questions[SelectedIndex] Selected=@GetSelected() OnAnswerChange=@AnswerChanged />
+            break;
+        default:
+            <div>This is a question.</div>
+            break;
+    }
+</Stepper>
+
+@code {
+
+    [Parameter]
+    public List<QuestionResponse> Questions { get; set; }
+
+    [Parameter]
+    public EventCallback<List<Answer>> OnFinish { get; set; }
+
+    private List<Answer> Answers;
+
+    private int SelectedIndex;
+
+    protected override void OnParametersSet()
+    {
+        Answers = new List<Answer>();
+        SelectedIndex = 0;
+    }
+
+    private List<string> GetSelected()
+    {
+        return Answers.GetByQuestion(Questions[SelectedIndex].Id)?.SelectedOptions ?? new List<string>();
+    }
+
+    private async Task Finish()
+    {
+        await OnFinish.InvokeAsync(Answers);
+    }
+
+    private void AnswerChanged(Answer votes)
+    {
+        var answer = Answers.GetByQuestion(votes.QuestionId);
+        if (answer == null) Answers.Add(votes);
+        else answer.SelectedOptions = votes.SelectedOptions;
+    }
+}

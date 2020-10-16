@@ -1,0 +1,32 @@
+﻿@namespace BlazorFormDesigner.Web.Pages
+
+@inherits LayoutComponentBase
+
+<MatThemeProvider Theme=@theme>
+    <MenuBar OnMenuClick=@MenuButtonClicked/>
+    <MatDrawerContainer Style="width: 100vw;" @onclick="@CloseMenu">
+        <MatDrawer @bind-Opened=@Opened Mode="@MatDrawerMode.Modal" Style="margin-top: 69px; z-index: 100;">
+            <NavMenu />
+        </MatDrawer>
+        <MatDrawerContent>
+            @Body
+        </MatDrawerContent>
+    </MatDrawerContainer>
+</MatThemeProvider>
+
+@code{
+
+    private bool Opened { get; set; } = false;
+
+    private MatTheme theme = new MatTheme() { Primary = Colors.Primary, Secondary = Colors.Primary };
+
+    private void MenuButtonClicked()
+    {
+        Opened = !Opened;
+    }
+
+    private void CloseMenu()
+    {
+        Opened = false;
+    }
+}

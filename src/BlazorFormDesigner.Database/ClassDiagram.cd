@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="BlazorFormDesigner.Database.Entities.Form">
+    <Position X="0.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAASAAAAAAAgAEACAAAAAAAAAAAAAAAGAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Form.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="BlazorFormDesigner.Database.Entities.Option">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Entities\Option.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorFormDesigner.Database.Entities.Question">
+    <Position X="4.75" Y="2.5" Width="1.75" />
+    <AssociationLine Name="Type" Type="BlazorFormDesigner.Database.Entities.QuestionType">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.077" Y="0.068" Height="0.182" Width="0.812" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAEAAAAAAAAAAAAAAQAAAAQAAAABAAAA=</HashCode>
+      <FileName>Entities\Question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Options" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="BlazorFormDesigner.Database.Entities.User">
+    <Position X="0.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAQAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorFormDesigner.Database.Entities.Answer">
+    <Position X="4.5" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Entities\Answer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlazorFormDesigner.Database.Entities.Response">
+    <Position X="0.5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAACAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Response.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Answers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="BlazorFormDesigner.Database.Entities.QuestionType">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAEAAAAACAAAAAAAAAAAACAACAAA=</HashCode>
+      <FileName>Entities\QuestionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

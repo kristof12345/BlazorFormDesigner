@@ -1,0 +1,12 @@
+﻿@namespace BlazorFormDesigner.Web.Components
+
+<div class="menu-background">
+    <h2 class="menu-logo">Blazor Form Designer</h2>
+    <img @onclick=@OnMenuClick class="menu-dropdown" src="./images/menu-button.png" alt="menu" />
+</div>
+
+@code {
+
+    [Parameter]
+    public EventCallback OnMenuClick { get; set; }
+}

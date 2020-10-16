@@ -1,0 +1,64 @@
+﻿@namespace BlazorFormDesigner.Web.Components
+
+<Container Top="20vh">
+    <Paper Width="550px" Height="450px">
+        <Vertical Alignment=@HorizontalAlignment.Center>
+            <MatH4>Login to Blazor Form Designer</MatH4>
+            <EditForm OnValidSubmit=@Submit Model=@Model>
+                <ObjectGraphDataAnnotationsValidator />
+                <p>
+                    <MatTextField @bind-Value=@Model.Username Outlined="true" Label="Username or Email Address" AutoFocus class="input-field" />
+                    <ValidationMessage For=@(() => Model.Username) />
+                </p>
+                <p>
+                    <MatTextField @bind-Value=@Model.Password Outlined="true" Label="Password" type="password" class="input-field" />
+                    <ValidationMessage For=@(() => Model.Password) />
+                </p>
+                @if (Error != null)
+                {
+                    <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
+                }
+                <MatCheckbox @bind-Value=@Remember Label="Remember me" class="input-checkbox"></MatCheckbox>
+                <MatButton Type="submit" Raised="true" class="input-field">Login </MatButton>
+            </EditForm>
+        </Vertical>
+    </Paper>
+</Container>
+
+@code {
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    [Inject]
+    private LoginService LoginService { get; set; }
+
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; }
+
+    private LoginRequest Model { get; set; } = new LoginRequest();
+
+    private bool Remember { get; set; }
+
+    private string Error { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var request = await LocalStorage.GetItemAsync<LoginRequest>("user");
+        if (request != null) { await LoginService.Login(request); }
+    }
+
+    private async Task Submit()
+    {
+        var error = await LoginService.Login(Model);
+
+        if (error == null && Remember)
+        {
+            await LocalStorage.SetItemAsync("user", Model);
+        }
+        else
+        {
+            Error = error?.Content;
+        }
+    }
+}

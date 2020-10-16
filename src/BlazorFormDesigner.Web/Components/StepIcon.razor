@@ -1,0 +1,34 @@
+﻿@if (Completed)
+{
+    <svg class="step-icon-completed" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="12"></circle>
+        <path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm-2 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"></path>
+    </svg>
+}
+else if (Active)
+{
+    <svg class="step-icon-active" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="12"></circle>
+        <text class="step-icon-text" x="12" y="16" text-anchor="middle">@(Number + 1)</text>
+    </svg>
+}
+else
+{
+    <svg class="step-icon-inactive" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="12"></circle>
+        <text class="step-icon-text" x="12" y="16" text-anchor="middle">@(Number + 1)</text>
+    </svg>
+}
+
+@code {
+
+    [Parameter]
+    public bool Active { get; set; } = false;
+
+    [Parameter]
+    public bool Completed { get; set; } = false;
+
+    [Parameter]
+    public int Number { get; set; }
+
+}

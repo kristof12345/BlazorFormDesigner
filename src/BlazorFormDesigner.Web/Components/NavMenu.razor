@@ -1,0 +1,34 @@
+﻿@namespace BlazorFormDesigner.Web.Components
+
+<MatNavMenu @onclick:stopPropagation="@true" Multi="false">
+
+    @if (LoginService.User != null)
+    {
+        <MatNavItem Href="/" Style=@($"color: {Colors.Primary};") NavLinkMatch="NavLinkMatch.All"><MatIcon Icon="home" AllowSelection="false" />Home</MatNavItem>
+        <MatNavItem Href="/create" Style=@($"color: {Colors.Primary};")><MatIcon Icon="add" AllowSelection="false" />Create form</MatNavItem>
+        <MatNavItem Href="/forms" Style=@($"color: {Colors.Primary};")><MatIcon Icon="assignment" AllowSelection="false" />Fill a form</MatNavItem>
+    }
+    else
+    {
+        <MatH5 Style="text-align: center; margin-top: 10px;">You're not logged in.</MatH5>
+    }
+</MatNavMenu>
+
+@code {
+
+    [Inject]
+    public LoginService LoginService { get; set; }
+
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private async Task UserLogout()
+    {
+        await LocalStorage.RemoveItemAsync("user");
+        await LoginService.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+}

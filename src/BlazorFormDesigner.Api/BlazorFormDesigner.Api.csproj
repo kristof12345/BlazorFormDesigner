@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="JWT" Version="7.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorFormDesigner.BusinessLogic\BlazorFormDesigner.BusinessLogic.csproj" />
+    <ProjectReference Include="..\BlazorFormDesigner.Database\BlazorFormDesigner.Database.csproj" />
+    <ProjectReference Include="..\BlazorFormDesigner.Web\BlazorFormDesigner.Web.csproj" />
+  </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,59 @@
+﻿<Vertical>
+    <div class="stepper">
+        @foreach (var item in Steps.Select((title, index) => new { index, title }))
+        {
+            <Step Title=@item.title Number=@item.index Active=@(item.index == selectedIndex) Completed=@(item.index < selectedIndex) />
+        }
+    </div>
+
+    @ChildContent
+
+    <Horizontal>
+        <MatButton OnClick=@Back Raised="true" Disabled=@(selectedIndex == 0)>Back </MatButton>
+        @if (selectedIndex < Steps.Count() - 1)
+        {
+            <MatButton OnClick=@Next Raised="true">Next </MatButton>
+        }
+        else
+        {
+            <MatButton OnClick=@Finish Raised="true">Finish </MatButton>
+        }
+    </Horizontal>
+</Vertical>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public IEnumerable<string> Steps { get; set; }
+
+    [Parameter]
+    public EventCallback OnNext { get; set; }
+
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    [Parameter]
+    public EventCallback OnFinish { get; set; }
+
+    private int selectedIndex { get; set; } = 0;
+
+    private async Task Next()
+    {
+        selectedIndex++;
+        await OnNext.InvokeAsync(null);
+    }
+
+    private async Task Back()
+    {
+        selectedIndex--;
+        await OnBack.InvokeAsync(null);
+    }
+
+    private async Task Finish()
+    {
+        await OnFinish.InvokeAsync(null);
+    }
+}

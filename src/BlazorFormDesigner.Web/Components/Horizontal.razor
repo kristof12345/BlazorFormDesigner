@@ -1,0 +1,27 @@
+﻿@namespace BlazorFormDesigner.Web.Components
+
+<div class="horizontal" style=@($"justify-content: {Alignment}; align-items: {Justify}; width: {Width}; height: {Height}; flex-wrap: {Wrap}")>
+    @ChildContent
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Alignment { get; set; } = HorizontalAlignment.SpaceBetween;
+
+    [Parameter]
+    public string Justify { get; set; } = VerticalAlignment.Unset;
+
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    [Parameter]
+    public string Height { get; set; } = "auto";
+
+    [Parameter]
+    public string Wrap { get; set; } = FlexWrap.Unset;
+
+}

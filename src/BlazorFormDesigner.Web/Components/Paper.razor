@@ -1,0 +1,29 @@
+﻿@namespace BlazorFormDesigner.Web.Components
+
+<div class="paper" style=@($"width: {Width}; height: {Height}; padding: {Padding.ToString()}; margin: {Margin.ToString()}; align-items: {Justify}; justify-content: {Align};")>
+    @ChildContent
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    [Parameter]
+    public string Height { get; set; } = "auto";
+
+    [Parameter]
+    public Border Padding { get; set; } = new Border("10px");
+
+    [Parameter]
+    public Border Margin { get; set; } = new Border("0px");
+
+    [Parameter]
+    public string Align { get; set; } = HorizontalAlignment.Center;
+
+    [Parameter]
+    public string Justify { get; set; } = VerticalJustify.Center;
+}

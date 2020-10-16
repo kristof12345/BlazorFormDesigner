@@ -1,0 +1,31 @@
+﻿<MatH5>@Question.Title</MatH5>
+<MatH6 Style="margin: 20px;">@Question.Description</MatH6>
+
+<Vertical>
+    <MatNumericUpDownField Value=@GetAnswer() ValueChanged=@(num => HandleClick(num)) TValue="int" Label=@Question.Title Outlined="true"></MatNumericUpDownField>
+</Vertical>
+
+@code {
+
+    [Parameter]
+    public QuestionResponse Question { get; set; }
+
+    [Parameter]
+    public EventCallback<Answer> OnAnswerChange { get; set; }
+
+    [Parameter]
+    public List<string> Selected { get; set; }
+
+    private int GetAnswer()
+    {
+        if (Selected.Count > 0) return int.Parse(Selected[0]);
+        return 0;
+    }
+
+    private void HandleClick(int answer)
+    {
+        Selected.Clear();
+        Selected.Add(answer.ToString());
+        OnAnswerChange.InvokeAsync(new Answer { QuestionId = Question.Id, SelectedOptions = Selected });
+    }
+}

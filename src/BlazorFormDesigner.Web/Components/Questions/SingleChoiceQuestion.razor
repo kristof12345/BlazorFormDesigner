@@ -1,0 +1,43 @@
+﻿<MatH5>@Question.Title</MatH5>
+<MatH6 Style="margin: 20px;">@Question.Description</MatH6>
+
+<Vertical>
+    <MatBody1 Class="center-text">Available options</MatBody1>
+    <Paper Margin=@(new Border("0px", "20px"))>
+        <div Style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+            @foreach (var option in Question.Options)
+            {
+                <div class=@(Selected.Contains(option.Content) ? "paper option option-selected" : "paper option")>
+                    <MatBody1 @onclick=@(() => HandleClick(option.Content)) Class="option-text">@option.Content</MatBody1>
+                </div>
+            }
+        </div>
+    </Paper>
+</Vertical>
+
+@code {
+
+    [Parameter]
+    public QuestionResponse Question { get; set; }
+
+    [Parameter]
+    public EventCallback<Answer> OnAnswerChange { get; set; }
+
+    [Parameter]
+    public List<string> Selected { get; set; }
+
+    private void HandleClick(string id)
+    {
+        if (Selected.Contains(id))
+        {
+            Selected.Clear();
+        }
+        else
+        {
+            Selected.Clear();
+            Selected.Add(id);
+        }
+
+        OnAnswerChange.InvokeAsync(new Answer { QuestionId = Question.Id, SelectedOptions = Selected });
+    }
+}

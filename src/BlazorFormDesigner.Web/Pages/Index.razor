@@ -1,0 +1,28 @@
+﻿@page "/"
+
+@if (LoginService.User == null)
+{
+    <LoginForm />
+}
+else
+{
+    <div style="margin-top: 100px">
+        <MatH4 Class="center-text" Style="margin-bottom: 40px;">Welcome @LoginService.User.Name</MatH4>
+    </div>
+}
+
+@code {
+
+    [Inject]
+    private LoginService LoginService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        LoginService.LoginEvent += OnLogin;
+    }
+
+    private async Task OnLogin()
+    {
+        await InvokeAsync(() => { StateHasChanged(); });
+    }
+}
