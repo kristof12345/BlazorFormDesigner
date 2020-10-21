@@ -79,22 +79,14 @@ namespace BlazorFormDesigner.Database.Repositories
             return result;
         }
 
-        public async Task RegisterAnswer(string username, string formId)
+        public async Task RegisterAnswer(string username, string formId, double points)
         {
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
             if (user == null) throw new InvalidUsernameException();
 
-            user.AnsweredForms.Add(formId);
-            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
-        }
-
-        public async Task RegisterDismiss(string username, string formId)
-        {
-            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
-            if (user == null) throw new InvalidUsernameException();
-
-            user.DismissedForms.Add(formId);
-            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
+            var entity = user;
+            entity.AnsweredForms.Add(formId, points);
+            await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
         }
     }
 }

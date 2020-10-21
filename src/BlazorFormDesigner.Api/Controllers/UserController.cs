@@ -4,6 +4,8 @@ using BlazorFormDesigner.Api.Converters;
 using BlazorFormDesigner.BusinessLogic.Exceptions;
 using BlazorFormDesigner.BusinessLogic.Services;
 using BlazorFormDesigner.Web.Models;
+using BlazorFormDesigner.Web.Requests;
+using BlazorFormDesigner.Web.Responses;
 using LoginApp.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,14 +46,14 @@ namespace BlazorFormDesigner.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<User> Create(UserRequest request)
+        public async Task<UserResponse> Create(UserRequest request)
         {
             var result = await UserService.Create(request.ToModel(mapper), request.Password);
             return result.ToDTO(mapper);
         }
 
         [HttpPut]
-        public async Task<User> Update(UserRequest request)
+        public async Task<UserResponse> Update(UserRequest request)
         {
             var result = await UserService.Update(request.ToModel(mapper));
             return result.ToDTO(mapper);
@@ -59,7 +61,7 @@ namespace BlazorFormDesigner.Api.Controllers
 
         [HttpDelete]
         [Route("{username}")]
-        public async Task<User> Delete([FromRoute] string username)
+        public async Task<UserResponse> Delete([FromRoute] string username)
         {
             var result = await UserService.Delete(username);
             return result.ToDTO(mapper);

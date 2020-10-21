@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlazorFormDesigner.Web.Models
+namespace BlazorFormDesigner.Web.Requests
 {
     public class LoginRequest
     {

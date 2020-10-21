@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using BlazorFormDesigner.Web.Models;
+using System.Collections.Generic;
 
-namespace BlazorFormDesigner.Web.Models
+namespace BlazorFormDesigner.Web.Responses
 {
-    public class Question
+    public class QuestionResponse
     {
         public string Id { get; set; }
 

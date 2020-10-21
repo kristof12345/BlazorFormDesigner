@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace BlazorFormDesigner.Web.Models
+namespace BlazorFormDesigner.Web.Responses
 {
-    public class Form
+    public class FormResponse
     {
         public string Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace BlazorFormDesigner.Web.Models
 
         public DateTime CreationDate { get; set; }
 
-        public List<Question> Questions { get; set; }
+        public List<QuestionResponse> Questions { get; set; }
 
         public double Points { get; set; }
 

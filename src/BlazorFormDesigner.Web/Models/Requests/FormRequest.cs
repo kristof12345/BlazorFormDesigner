@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorFormDesigner.Web.Models
+namespace BlazorFormDesigner.Web.Requests
 {
     public class FormRequest
     {

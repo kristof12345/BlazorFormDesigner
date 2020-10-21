@@ -4,7 +4,7 @@
         <MatH6 Class="center-text" Style=@($"color: {Colors.Primary};")>@("Created by: " + Form.CreatorId)</MatH6>
         <MatH6 Class="center-text">@Form.Description</MatH6>
         <Horizontal Height="56px">
-            <MatButton OnClick=@Dismiss Raised="true" Style="align-self: flex-end;">Dismiss </MatButton>
+            <MatButton Raised="true" Style="align-self: flex-end;">Dismiss </MatButton>
             <MatBody1 Style=@($"color: {Colors.Primary}; align-self: flex-end; margin-bottom: 7px;")>@(Form.Questions.Count + " questions")</MatBody1>
             <MatButton Link=@("/forms/" + Form.Id) Raised="true" Style="align-self: flex-end;">Answer now </MatButton>
         </Horizontal>
@@ -12,15 +12,6 @@
 </Paper>
 
 @code {
-
     [Parameter]
-    public Form Form { get; set; }
-
-    [Parameter]
-    public EventCallback<string> OnDismiss{ get; set; }
-
-    public async Task Dismiss()
-    {
-        await OnDismiss.InvokeAsync(Form.Id);
-    }
+    public FormResponse Form { get; set; }
 }

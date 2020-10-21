@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorFormDesigner.Web.Models;
+using BlazorFormDesigner.Web.Requests;
+using BlazorFormDesigner.Web.Responses;
 
 namespace BlazorFormDesigner.Web.Services
 {
@@ -15,7 +17,7 @@ namespace BlazorFormDesigner.Web.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var loginResponse = await response.Content.ReadAsAsync<User>();
+                    var loginResponse = await response.Content.ReadAsAsync<UserResponse>();
                     return null;
                 }
 

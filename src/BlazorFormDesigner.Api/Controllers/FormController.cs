@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using BlazorFormDesigner.BusinessLogic.Models;
 using BlazorFormDesigner.BusinessLogic.Services;
-using BlazorFormDesigner.Web.Models;
-using BlazorFormDesigner.Api.Converters;
+using BlazorFormDesigner.Web.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorFormDesigner.Api.Controllers
@@ -20,32 +20,32 @@ namespace BlazorFormDesigner.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Form>>> GetAll()
+        public async Task<ActionResult<List<FormResponse>>> GetAll()
         {
             var user = ValidateUser();
 
             var forms = await FormService.GetAll(user);
 
-            return Ok(forms.ToDTO(mapper));
+            return Ok(forms);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Form>> GetById([FromRoute] string id)
+        public async Task<ActionResult<FormResponse>> GetById([FromRoute] string id)
         {
             ValidateUser();
 
-            var form = await FormService.GetById(id);
+            var forms = await FormService.GetById(id);
 
-            return Ok(form.ToDTO(mapper));
+            return Ok(forms);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Form>> Create(FormRequest form)
+        public async Task<ActionResult<Form>> Create(Form form)
         {
             var user = ValidateUser();
 
-            var result = await FormService.Create(form.ToModel(mapper), user);
+            var result = await FormService.Create(form, user);
 
             return Ok(result);
         }
@@ -59,17 +59,6 @@ namespace BlazorFormDesigner.Api.Controllers
             var result = await FormService.Delete(id, user);
 
             return Ok(result);
-        }
-
-        [HttpPut]
-        [Route("{id}/dismiss")]
-        public async Task<ActionResult> Dismiss([FromRoute] string id)
-        {
-            var user = ValidateUser();
-
-            await FormService.Dismiss(id, user);
-
-            return Ok();
         }
     }
 }
