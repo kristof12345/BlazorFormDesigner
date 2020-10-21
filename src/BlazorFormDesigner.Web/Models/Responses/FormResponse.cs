@@ -23,5 +23,9 @@ namespace BlazorFormDesigner.Web.Responses
         public DateTime CreationDate { get; set; }
 
         public List<QuestionResponse> Questions { get; set; }
+
+        public double Points { get; set; }
+
+        public double MaxPoints { get; set; }
     }
 }

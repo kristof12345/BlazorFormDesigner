@@ -1,3 +1,63 @@
-﻿@page
-@{
+﻿@page "/registration"
+
+<Container Top="20vh">
+    <Paper Width="1200px" Height="500px">
+        <Vertical Alignment=@HorizontalAlignment.Center>
+            <MatH4>Register to Blazor Form Designer</MatH4>
+            <EditForm OnValidSubmit=@Submit Model=@Model>
+                <ObjectGraphDataAnnotationsValidator />
+                <p>
+                    <MatTextField @bind-Value=@Model.Name Outlined="true" Label="Full name" AutoFocus class="input-field-wide" />
+                    <ValidationMessage For=@(() => Model.Name) />
+                </p>
+                <p>
+                    <MatTextField @bind-Value=@Model.Email Outlined="true" Label="Email address" AutoFocus class="input-field-wide" />
+                    <ValidationMessage For=@(() => Model.Email) />
+                </p>
+                <Horizontal Alignment=@VerticalAlignment.SpaceBetween>
+                    <p>
+                        <MatTextField @bind-Value=@Model.Username Outlined="true" Label="Username" AutoFocus class="input-field" />
+                        <ValidationMessage For=@(() => Model.Username) />
+                    </p>
+                    <p>
+                        <MatTextField @bind-Value=@Model.Password Outlined="true" Label="Password" type="password" class="input-field" />
+                        <ValidationMessage For=@(() => Model.Password) />
+                    </p>
+                </Horizontal>
+                @if (Error != null)
+                {
+                    <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
+                }
+                <MatButton Type="submit" Raised="true" class="input-field">Register </MatButton>
+            </EditForm>
+        </Vertical>
+    </Paper>
+</Container>
+
+@code {
+
+    [Inject]
+    private UserService UserService { get; set; }
+
+    [Inject]
+    private LoginService LoginService { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    private UserRequest Model { get; set; } = new UserRequest();
+
+    private bool Remember { get; set; }
+
+    private string Error { get; set; }
+
+    private async Task Submit()
+    {
+        await UserService.Register(Model);
+        var request = new LoginRequest();
+        request.Username = Model.Username;
+        request.Password = Model.Password;
+        await LoginService.Login(request);
+        NavigationManager.NavigateTo("");
+    }
 }

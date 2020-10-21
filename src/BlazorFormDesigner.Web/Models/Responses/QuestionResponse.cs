@@ -16,5 +16,7 @@ namespace BlazorFormDesigner.Web.Responses
         public bool IsCorrected { get; set; }
 
         public List<Option> Options { get; set; }
+
+        public List<string> SelectedOptions { get; set; }
     }
 }

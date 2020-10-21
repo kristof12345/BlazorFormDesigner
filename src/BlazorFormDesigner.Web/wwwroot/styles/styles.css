@@ -98,6 +98,13 @@ text {
     margin-bottom: 20px;
 }
 
+.input-field-wide {
+    width: 850px !important;
+    height: 56px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .input-checkbox {
     width: 400px;
     height: 56px;
@@ -392,6 +399,7 @@ text {
 
 .validation-message {
     color: red !important;
+    max-width: 400px !important;
 }
 
 .mdc-text-field--outlined .mat-text-field-input.mdc-text-field__input.invalid, .mdc-text-field--outlined .mat-text-field-input.mdc-text-field__input.valid.modified, .mdc-text-field--outlined .mdc-select__selected-text.invalid, .mdc-text-field--outlined .mdc-select__selected-text.valid.modified, .mdc-select__selected-text.invalid {

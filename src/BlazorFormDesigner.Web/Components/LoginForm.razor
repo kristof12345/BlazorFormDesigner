@@ -1,6 +1,4 @@
-﻿@namespace BlazorFormDesigner.Web.Components
-
-<Container Top="20vh">
+﻿<Container Top="20vh">
     <Paper Width="550px" Height="450px">
         <Vertical Alignment=@HorizontalAlignment.Center>
             <MatH4>Login to Blazor Form Designer</MatH4>
@@ -21,14 +19,12 @@
                 <MatCheckbox @bind-Value=@Remember Label="Remember me" class="input-checkbox"></MatCheckbox>
                 <MatButton Type="submit" Raised="true" class="input-field">Login </MatButton>
             </EditForm>
+            <NavLink href="registration" Style="text-decoration: none; color: #0071BC; font-family: Helvetica, Arial, sans-serif;">Click here to register!</NavLink>
         </Vertical>
     </Paper>
 </Container>
 
 @code {
-
-    [Inject]
-    IJSRuntime JSRuntime { get; set; }
 
     [Inject]
     private LoginService LoginService { get; set; }

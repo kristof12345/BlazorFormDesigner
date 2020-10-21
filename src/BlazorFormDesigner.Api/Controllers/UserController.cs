@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using BlazorFormDesigner.Api.Converters;
+using BlazorFormDesigner.BusinessLogic.Exceptions;
 using BlazorFormDesigner.BusinessLogic.Services;
+using BlazorFormDesigner.Web.Models;
 using BlazorFormDesigner.Web.Requests;
 using BlazorFormDesigner.Web.Responses;
 using LoginApp.WebApi.Services;
@@ -24,7 +26,19 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
         {
-            var user = await UserService.ValidatePassword(request.Username, request.Password);
+            BusinessLogic.Models.User user = null;
+
+            try
+            {
+                user = await UserService.ValidatePassword(request.Username, request.Password);
+            } catch(InvalidUsernameException)
+            {
+                return NotFound(new ErrorResponse("Invalid username."));
+            }
+            catch (InvalidPasswordException)
+            {
+                return Unauthorized(new ErrorResponse("Invalid password."));
+            }
 
             var token = TokenService.GenerateToken(user.Username);
 

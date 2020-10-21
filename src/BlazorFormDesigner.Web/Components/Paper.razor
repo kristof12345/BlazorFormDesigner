@@ -1,6 +1,6 @@
 ﻿@namespace BlazorFormDesigner.Web.Components
 
-<div class="paper" style=@($"width: {Width}; height: {Height}; padding: {Padding.ToString()}; margin: {Margin.ToString()}; align-items: {Justify}; justify-content: {Align};")>
+<div class="paper" style=@($"width: {Width}; height: {Height}; padding: {Padding.ToString()}; margin: {Margin.ToString()}; align-items: {Justify}; justify-content: {Align}; flex-direction: {Direction}")>
     @ChildContent
 </div>
 
@@ -26,4 +26,7 @@
 
     [Parameter]
     public string Justify { get; set; } = VerticalJustify.Center;
+
+    [Parameter]
+    public string Direction { get; set; } = "column";
 }

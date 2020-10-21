@@ -22,5 +22,9 @@ namespace BlazorFormDesigner.BusinessLogic.Models
         public DateTime CreationDate { get; set; }
 
         public List<Question> Questions { get; set; }
+
+        public double Points { get; set; }
+
+        public double MaxPoints { get; set; }
     }
 }
