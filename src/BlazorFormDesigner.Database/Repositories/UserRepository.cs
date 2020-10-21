@@ -79,14 +79,13 @@ namespace BlazorFormDesigner.Database.Repositories
             return result;
         }
 
-        public async Task RegisterAnswer(string username, string formId, double points)
+        public async Task RegisterAnswer(string username, string formId)
         {
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
             if (user == null) throw new InvalidUsernameException();
 
-            var entity = user;
-            entity.AnsweredForms.Add(formId, points);
-            await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
+            user.AnsweredForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
         }
 
         public async Task RegisterDismiss(string username, string formId)
@@ -94,9 +93,8 @@ namespace BlazorFormDesigner.Database.Repositories
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
             if (user == null) throw new InvalidUsernameException();
 
-            var entity = user;
-            entity.DismissedForms.Add(formId);
-            await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
+            user.DismissedForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
         }
     }
 }
