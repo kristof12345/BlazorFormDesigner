@@ -26,7 +26,7 @@ namespace BlazorFormDesigner.Api.Controllers
 
             var forms = await FormService.GetAll(user);
 
-            return Ok(forms);
+            return Ok(forms.ToDTO(mapper));
         }
 
         [HttpGet]
@@ -35,9 +35,9 @@ namespace BlazorFormDesigner.Api.Controllers
         {
             ValidateUser();
 
-            var forms = await FormService.GetById(id);
+            var form = await FormService.GetById(id);
 
-            return Ok(forms);
+            return Ok(form.ToDTO(mapper));
         }
 
         [HttpPost]

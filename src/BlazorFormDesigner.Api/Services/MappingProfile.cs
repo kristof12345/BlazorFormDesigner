@@ -36,6 +36,9 @@ namespace BlazorFormDesigner.Api.Services
             //Models - Responses
             CreateMap<BusinessLogic.Models.User, Web.Models.User>();
             CreateMap<BusinessLogic.Models.User, Web.Models.LoginResponse>();
+            CreateMap<BusinessLogic.Models.Form, Web.Models.Form>();
+            CreateMap<BusinessLogic.Models.Question, Web.Models.Question>();
+            CreateMap<BusinessLogic.Models.Option, Web.Models.Option>();
         }
     }
 }

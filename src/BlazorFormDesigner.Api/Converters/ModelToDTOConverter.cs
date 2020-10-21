@@ -22,5 +22,15 @@ namespace BlazorFormDesigner.Api.Converters
             dto.Token = token;
             return dto;
         }
+
+        public static Web.Models.Form ToDTO(this BusinessLogic.Models.Form model, IMapper mapper)
+        {
+            return mapper.Map<Web.Models.Form>(model);
+        }
+
+        public static IEnumerable<Web.Models.Form> ToDTO(this IEnumerable<BusinessLogic.Models.Form> model, IMapper mapper)
+        {
+            return model.Select(item => item.ToDTO(mapper));
+        }
     }
 }
