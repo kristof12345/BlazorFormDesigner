@@ -49,7 +49,7 @@ namespace BlazorFormDesigner.BusinessLogic.Services
 
         private async Task getSelectedAnswers(User user, List<Form> forms, Form form)
         {
-            var response = await AnswerRepository.Get(user.Username, form.Id);
+            var response = await AnswerRepository.GetByUserIdAndFormId(user.Username, form.Id);
             var questions = forms.GetById(form.Id).Questions;
             for (int i = 0; i < questions.Count; i++)
             {
@@ -84,6 +84,11 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             if (form.CreatorId != user.Username) throw new AuthorizationException();
 
             return form;
+        }
+
+        public async Task Dismiss(string id, User user)
+        {
+            await UserRepository.RegisterDismiss(user.Username, id);
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using BlazorFormDesigner.BusinessLogic.Models;
-using BlazorFormDesigner.Web.Requests;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,32 +6,32 @@ namespace BlazorFormDesigner.Api.Converters
 {
     public static class DTOToModelConverter
     {
-        public static User ToModel(this UserRequest dto, IMapper mapper)
+        public static BusinessLogic.Models.User ToModel(this Web.Models.UserRequest dto, IMapper mapper)
         {
-            return mapper.Map<User>(dto);
+            return mapper.Map<BusinessLogic.Models.User>(dto);
         }
 
-        public static Form ToModel(this FormRequest dto, IMapper mapper)
+        public static BusinessLogic.Models.Form ToModel(this Web.Models.FormRequest dto, IMapper mapper)
         {
-            return mapper.Map<Form>(dto);
+            return mapper.Map<BusinessLogic.Models.Form>(dto);
         }
 
-        public static Question ToModel(this QuestionRequest dto, IMapper mapper)
+        public static BusinessLogic.Models.Question ToModel(this Web.Models.QuestionRequest dto, IMapper mapper)
         {
-            return mapper.Map<Question>(dto);
+            return mapper.Map<BusinessLogic.Models.Question>(dto);
         }
 
-        public static Option ToModel(this Web.Models.Option dto, IMapper mapper)
+        public static BusinessLogic.Models.Option ToModel(this Web.Models.Option dto, IMapper mapper)
         {
-            return mapper.Map<Option>(dto);
+            return mapper.Map<BusinessLogic.Models.Option>(dto);
         }
 
-        public static Answer ToModel(this Web.Models.Answer dto, IMapper mapper)
+        public static BusinessLogic.Models.Answer ToModel(this Web.Models.Answer dto, IMapper mapper)
         {
-            return mapper.Map<Answer>(dto);
+            return mapper.Map<BusinessLogic.Models.Answer>(dto);
         }
 
-        public static List<Answer> ToModel(this IEnumerable<Web.Models.Answer> dtos, IMapper mapper)
+        public static List<BusinessLogic.Models.Answer> ToModel(this IEnumerable<Web.Models.Answer> dtos, IMapper mapper)
         {
             return dtos.Select(dto => dto.ToModel(mapper)).ToList();
         }

@@ -1,8 +1,7 @@
-﻿using BlazorFormDesigner.Web.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorFormDesigner.Web.Requests
+namespace BlazorFormDesigner.Web.Models
 {
     public class QuestionRequest
     {

@@ -4,7 +4,7 @@
     <h3>Available forms</h3>
     @foreach (var form in Forms.Where(f => f.Status == FormStatus.Available))
     {
-        <NewForm Form=@form />
+        <AvailableForm Form=@form />
     }
     <h3>Answered forms</h3>
     @foreach (var form in Forms.Where(f => f.Status == FormStatus.Answered))
@@ -14,7 +14,7 @@
     <h3>Dismissed forms</h3>
     @foreach (var form in Forms.Where(f => f.Status == FormStatus.Dismissed))
     {
-        <NewForm Form=@form />
+        <DismissedForm Form=@form />
     }
 </Container>
 
@@ -22,10 +22,16 @@
     [Inject]
     private FormService FormService { get; set; }
 
-    private IEnumerable<FormResponse> Forms { get; set; } = new List<FormResponse>();
+    private IEnumerable<Form> Forms { get; set; } = new List<Form>();
 
     protected override async Task OnParametersSetAsync()
     {
         Forms = await FormService.GetAll();
+    }
+
+    public async void Dismiss(string id)
+    {
+        await FormService.Dismiss(id);
+        this.StateHasChanged();
     }
 }

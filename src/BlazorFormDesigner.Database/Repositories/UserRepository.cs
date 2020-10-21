@@ -88,6 +88,16 @@ namespace BlazorFormDesigner.Database.Repositories
             entity.AnsweredForms.Add(formId, points);
             await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
         }
+
+        public async Task RegisterDismiss(string username, string formId)
+        {
+            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
+            if (user == null) throw new InvalidUsernameException();
+
+            var entity = user;
+            entity.DismissedForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == entity.Username, entity);
+        }
     }
 }
 

@@ -12,5 +12,6 @@ namespace BlazorFormDesigner.BusinessLogic.Interfaces
         Task<User> ChangePassword(string username, string password);
         Task<User> ValidatePassword(string username, string password);
         Task RegisterAnswer(string username, string formId, double points);
+        Task RegisterDismiss(string username, string formId);
     }
 }
