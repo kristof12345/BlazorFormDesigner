@@ -1,6 +1,6 @@
 ﻿using BlazorFormDesigner.Web.Models;
 
-namespace BlazorFormDesigner.Web.Responses
+namespace BlazorFormDesigner.Web.Models
 {
     public class LoginResponse
     {

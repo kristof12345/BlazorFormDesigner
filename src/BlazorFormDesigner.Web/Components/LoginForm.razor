@@ -27,7 +27,7 @@
 @code {
 
     [Inject]
-    private LoginService LoginService { get; set; }
+    private UserService UserService { get; set; }
 
     [Inject]
     private ILocalStorageService LocalStorage { get; set; }
@@ -41,12 +41,12 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         var request = await LocalStorage.GetItemAsync<LoginRequest>("user");
-        if (request != null) { await LoginService.Login(request); }
+        if (request != null) { await UserService.Login(request); }
     }
 
     private async Task Submit()
     {
-        var error = await LoginService.Login(Model);
+        var error = await UserService.Login(Model);
 
         if (error == null && Remember)
         {

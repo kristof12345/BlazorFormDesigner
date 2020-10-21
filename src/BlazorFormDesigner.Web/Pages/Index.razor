@@ -1,24 +1,24 @@
 ﻿@page "/"
 
-@if (LoginService.User == null)
+@if (UserService.User == null)
 {
     <LoginForm />
 }
 else
 {
     <div style="margin-top: 100px">
-        <MatH4 Class="center-text" Style="margin-bottom: 40px;">Welcome @LoginService.User.Name</MatH4>
+        <MatH4 Class="center-text" Style="margin-bottom: 40px;">Welcome @UserService.User.Name</MatH4>
     </div>
 }
 
 @code {
 
     [Inject]
-    private LoginService LoginService { get; set; }
+    private UserService UserService { get; set; }
 
     protected override void OnInitialized()
     {
-        LoginService.LoginEvent += OnLogin;
+        UserService.LoginEvent += OnLogin;
     }
 
     private async Task OnLogin()

@@ -15,7 +15,7 @@
                 <MatExpansionPanelSummary>
                     <MatExpansionPanelHeader>
                         <Horizontal Width="1350px">
-                            <Horizontal Alignment=@HorizontalAlignment.Left Justify=@VerticalAlignment.Center >
+                            <Horizontal Alignment=@HorizontalAlignment.Left Justify=@VerticalAlignment.Center>
                                 <MatH6>@question.Title</MatH6><p>&nbsp;</p><MatBody1 Style=@($"color: {Colors.Primary};")>(@question.Type)</MatBody1>
                             </Horizontal>
                             <MatH6 Style="">@points(question) / 1</MatH6>
@@ -32,14 +32,14 @@
 
 @code {
     [Parameter]
-    public FormResponse Form { get; set; }
+    public Form Form { get; set; }
 
     public int percent()
     {
         return (int)(Form.Points / Form.MaxPoints * 100);
     }
 
-    public int points(QuestionResponse question)
+    public int points(Question question)
     {
         if (ListExtensions.Same(question.SelectedOptions, question.Options.Where(a => a.IsCorrect).Select(o => o.Content)))
             return 1;

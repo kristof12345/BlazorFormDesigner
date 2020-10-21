@@ -2,7 +2,7 @@
 
 <MatNavMenu @onclick:stopPropagation="@true" Multi="false">
 
-    @if (LoginService.User != null)
+    @if (UserService.User != null)
     {
         <MatNavItem Href="/" Style=@($"color: {Colors.Primary};") NavLinkMatch="NavLinkMatch.All"><MatIcon Icon="home" AllowSelection="false" />Home</MatNavItem>
         <MatNavItem Href="/create" Style=@($"color: {Colors.Primary};")><MatIcon Icon="add" AllowSelection="false" />Create form</MatNavItem>
@@ -18,7 +18,7 @@
 @code {
 
     [Inject]
-    public LoginService LoginService { get; set; }
+    public UserService UserService { get; set; }
 
     [Inject]
     private ILocalStorageService LocalStorage { get; set; }
@@ -29,7 +29,7 @@
     private async Task UserLogout()
     {
         await LocalStorage.RemoveItemAsync("user");
-        await LoginService.Logout();
+        await UserService.Logout();
         NavigationManager.NavigateTo("/");
     }
 }

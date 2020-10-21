@@ -7,9 +7,7 @@ namespace BlazorFormDesigner.BusinessLogic.Interfaces
     public interface IFormRepository
     {
         Task<List<Form>> GetAll();
-
         Task<Form> GetById(string id);
-
         Task<Form> Create(Form form);
     }
 }

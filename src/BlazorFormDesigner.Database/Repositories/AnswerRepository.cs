@@ -24,7 +24,7 @@ namespace BlazorFormDesigner.Database.Repositories
             return entity.ToModel(mapper);
         }
 
-        public async Task<Response> Get(string userId, string formId)
+        public async Task<Response> GetByUserIdAndFormId(string userId, string formId)
         {
             var result = await responses.Find(r => r.UserId == userId && r.FormId == formId).FirstOrDefaultAsync();
             return result.ToModel(mapper);

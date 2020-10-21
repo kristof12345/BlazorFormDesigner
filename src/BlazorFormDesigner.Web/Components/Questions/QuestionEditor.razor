@@ -1,5 +1,89 @@
-﻿<h3>Component1</h3>
+﻿<div class="framed">
+    <EditForm OnValidSubmit=@Submit OnInvalidSubmit=@InvalidSubmit EditContext=@EditContext>
+        <DataAnnotationsValidator />
+        <p>
+            <MatTextField @bind-Value=@Model.Title Label="Title" Outlined="true" />
+            <ValidationMessage For=@(() => Model.Title) />
+        </p>
+        <p>
+            <MatTextField @bind-Value=@Model.Description Label="Description" TextArea="true" Outlined="true" />
+            <ValidationMessage For=@(() => Model.Description) />
+        </p>
+        <p>
+            <MatSelectItem Value=@Model.Type ValueChanged=@((string value)=> SetType(value)) ValueExpression=@(()=> Model.Type) Items=@(EnumExtensions.GetAttributeList<QuestionType>()) Label="Question type" Outlined="true" />
+            <ValidationMessage For=@(() => Model.Type) />
+        </p>
+        <MatBody1 Class="subtitle">Options</MatBody1>
+        <Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
+            @foreach (var option in Model.Options)
+            {
+                <div class="framed" style="margin-right: 10px; align-items: center; width: auto;">
+                    <MatBody1>@option.Content</MatBody1>
+                </div>
+            }
+        </Horizontal>
+        <Horizontal>
+            <MatTextField @bind-Value=@Option ValidationDisabled="true" Label="Option" Style="width: 90%;" Outlined="true" />
+            <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
+        </Horizontal>
+        @if (Error != null)
+        {
+            <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
+        }
+        <MatButton Type="submit" Style="width: 100%; margin-top: 10px; margin-bottom: 10px;" Raised="true">Add question</MatButton>
+    </EditForm>
+</div>
 
 @code {
 
+    [Parameter]
+    public QuestionRequest Model { get; set; }
+
+    [Parameter]
+    public EventCallback<QuestionRequest> OnFinish { get; set; }
+
+    private EditContext EditContext { get; set; }
+
+    private string Option { get; set; }
+
+    private string Error { get; set; }
+
+    protected override void OnInitialized()
+    {
+        EditContext = new EditContext(Model);
+    }
+
+    protected override void OnParametersSet()
+    {
+        EditContext = new EditContext(Model);
+    }
+
+    private void AddOption()
+    {
+        if (!String.IsNullOrEmpty(Option))
+        {
+            Model.Options.Add(new Option { Content = Option });
+            Option = " ";
+            Error = null;
+        }
+    }
+
+    private async Task Submit()
+    {
+        await OnFinish.InvokeAsync(Model);
+    }
+
+    private void InvalidSubmit()
+    {
+        if (Model.Options.Count < 2)
+        {
+            Error = "Minimum 2 options required for each question.";
+        }
+    }
+
+    private void SetType(string value)
+    {
+        Model.Type = value;
+        EditContext.NotifyValidationStateChanged();
+    }
 }

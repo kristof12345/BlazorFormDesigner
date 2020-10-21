@@ -14,7 +14,7 @@ namespace BlazorFormDesigner.BusinessLogic.Models
 
         public string Email { get; set; }
 
-        public Dictionary<string, double> AnsweredForms { get; set; }
+        public List<string> AnsweredForms { get; set; }
 
         public List<string> DismissedForms { get; set; }
 

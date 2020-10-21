@@ -24,7 +24,6 @@ namespace BlazorFormDesigner.Web
 
             services.AddBlazoredLocalStorage();
 
-            services.AddSingleton<LoginService>();
             services.AddSingleton<UserService>();
             services.AddSingleton<FormService>();
             services.AddSingleton<AnswerService>();

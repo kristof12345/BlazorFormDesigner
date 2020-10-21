@@ -40,9 +40,6 @@
     private UserService UserService { get; set; }
 
     [Inject]
-    private LoginService LoginService { get; set; }
-
-    [Inject]
     NavigationManager NavigationManager { get; set; }
 
     private UserRequest Model { get; set; } = new UserRequest();
@@ -57,7 +54,7 @@
         var request = new LoginRequest();
         request.Username = Model.Username;
         request.Password = Model.Password;
-        await LoginService.Login(request);
+        await UserService.Login(request);
         NavigationManager.NavigateTo("");
     }
 }
