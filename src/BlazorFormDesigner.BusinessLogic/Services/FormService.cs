@@ -82,10 +82,27 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return await FormRepository.GetById(id);
         }
 
+        public async Task<FormDetails> GetDetailsById(string id, string username)
+        {
+            var form = await FormRepository.GetById(id);
+            if (form.CreatorId != username) return null;
+
+            var answers = AnswerRepository.GetByFormId(id);
+
+            var details = new FormDetails();
+            return details;
+        }
+
+        public async Task<List<Form>> GetMy(User user)
+        {
+            return await FormRepository.GetByUser(user.Username);
+        }
+
         public async Task<Form> Create(Form form, User user)
         {
             form.CreationDate = DateTime.Now;
             form.CreatorId = user.Username;
+            await UserRepository.RegisterCreator(user.Username, form.Id);
             return await FormRepository.Create(form);
         }
 

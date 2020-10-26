@@ -51,5 +51,10 @@ namespace BlazorFormDesigner.Database.Converters
         {
             return mapper.Map<Response>(entity);
         }
+
+        public static List<Response> ToModel(this IEnumerable<Entities.Response> entities, IMapper mapper)
+        {
+            return entities.Select(entity => entity.ToModel(mapper)).ToList();
+        }
     }
 }

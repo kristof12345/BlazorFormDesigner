@@ -4,7 +4,6 @@ using BlazorFormDesigner.BusinessLogic.Models;
 using BlazorFormDesigner.Database.Converters;
 using BlazorFormDesigner.Database.Settings;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +20,12 @@ namespace BlazorFormDesigner.Database.Repositories
         public async Task<List<Form>> GetAll()
         {
             var result = await forms.FindAll().ToListAsync();
+            return result.ToModel(mapper);
+        }
+
+        public async Task<List<Form>> GetByUser(string username)
+        {
+            var result = await forms.Find(f => f.CreatorId == username).ToListAsync();
             return result.ToModel(mapper);
         }
 

@@ -1,5 +1,34 @@
-﻿<h3>Component1</h3>
+﻿<Vertical>
+    <div class="paper" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding-left: 120px; padding-right: 120px; padding-bottom: 20px; padding-top: 20px;">
+        <Vertical>
+            <MatH4>@Form.Title</MatH4>
+            <MatH6 Class="center-text" Style=@($"color: {Colors.Primary};")>@("Created by: " + Form.CreatorId)</MatH6>
+            <MatH6 Class="center-text">@Form.Description</MatH6>
+
+        </Vertical>
+    </div>
+    <MatAccordion Multi="true" Style="width: 100%; margin: 0px;">
+        @foreach (var question in Form.Questions)
+        {
+            <MatExpansionPanel Style="width: 100%; margin: 0px;">
+                <MatExpansionPanelSummary>
+                    <MatExpansionPanelHeader>
+                        <Horizontal Width="1350px">
+                            <Horizontal Alignment=@HorizontalAlignment.Left Justify=@VerticalAlignment.Center>
+                                <MatH6>@question.Title</MatH6><p>&nbsp;</p><MatBody1 Style=@($"color: {Colors.Primary};")>(@question.Type)</MatBody1>
+                            </Horizontal>
+                        </Horizontal>
+                    </MatExpansionPanelHeader>
+                </MatExpansionPanelSummary>
+                <MatExpansionPanelDetails>
+                    <QuestionView Question=@question />
+                </MatExpansionPanelDetails>
+            </MatExpansionPanel>
+        }
+    </MatAccordion>
+</Vertical>
 
 @code {
-
+    [Parameter]
+    public Form Form { get; set; }
 }

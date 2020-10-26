@@ -46,6 +46,9 @@
     [Inject]
     private FormService FormService { get; set; }
 
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
     private EditContext EditContext { get; set; }
 
     private FormRequest Model { get; set; } = new FormRequest { Questions = new List<QuestionRequest>() };
@@ -80,7 +83,7 @@
     private async Task Submit()
     {
         await FormService.Create(Model);
-        Model = null;
+        NavigationManager.NavigateTo("myforms");
     }
 
     private void Reset()

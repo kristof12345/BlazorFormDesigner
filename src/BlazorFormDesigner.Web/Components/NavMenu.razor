@@ -1,19 +1,20 @@
 ﻿@namespace BlazorFormDesigner.Web.Components
 
-<MatNavMenu @onclick:stopPropagation="@true" Multi="false">
+    <MatNavMenu @onclick:stopPropagation="@true" Multi="false">
 
-    @if (UserService.User != null)
-    {
-        <MatNavItem Href="/" Style=@($"color: {Colors.Primary};") NavLinkMatch="NavLinkMatch.All"><MatIcon Icon="home" AllowSelection="false" />Home</MatNavItem>
-        <MatNavItem Href="/create" Style=@($"color: {Colors.Primary};")><MatIcon Icon="add" AllowSelection="false" />Create form</MatNavItem>
-        <MatNavItem Href="/forms" Style=@($"color: {Colors.Primary};")><MatIcon Icon="assignment" AllowSelection="false" />Fill a form</MatNavItem>
-        <MatNavItem OnClick=@UserLogout Style=@($"color: {Colors.Primary};")><MatIcon Icon="exit_to_app" AllowSelection="false" />Logout</MatNavItem>
-    }
-    else
-    {
-    <MatH5 Style="text-align: center; margin-top: 10px;">You're not logged in.</MatH5>
-    }
-</MatNavMenu>
+        @if (UserService.User != null)
+        {
+            <MatNavItem Href="/" Style=@($"color: {Colors.Primary};") NavLinkMatch="NavLinkMatch.All"><MatIcon Icon="home" AllowSelection="false" />Home</MatNavItem>
+            <MatNavItem Href="/create" Style=@($"color: {Colors.Primary};")><MatIcon Icon="add" AllowSelection="false" />Create form</MatNavItem>
+            <MatNavItem Href="/myforms" Style=@($"color: {Colors.Primary};")><MatIcon Icon="assessment" AllowSelection="false" />My forms</MatNavItem>
+            <MatNavItem Href="/forms" Style=@($"color: {Colors.Primary};")><MatIcon Icon="assignment" AllowSelection="false" />Fill a form</MatNavItem>
+            <MatNavItem OnClick=@UserLogout Style=@($"color: {Colors.Primary};")><MatIcon Icon="exit_to_app" AllowSelection="false" />Logout</MatNavItem>
+        }
+        else
+        {
+            <MatH5 Style="text-align: center; margin-top: 10px;">You're not logged in.</MatH5>
+        }
+    </MatNavMenu>
 
 @code {
 

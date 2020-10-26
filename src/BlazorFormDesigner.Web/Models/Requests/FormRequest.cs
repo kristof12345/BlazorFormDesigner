@@ -11,7 +11,7 @@ namespace BlazorFormDesigner.Web.Models
         public string Title { get; set; }
 
         [Required]
-        [MinLength(50)]
+        [MinLength(20)]
         [MaxLength(1000)]
         public string Description { get; set; }
 

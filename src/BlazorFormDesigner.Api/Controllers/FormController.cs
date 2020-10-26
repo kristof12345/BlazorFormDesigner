@@ -30,12 +30,34 @@ namespace BlazorFormDesigner.Api.Controllers
         }
 
         [HttpGet]
+        [Route("my")]
+        public async Task<ActionResult<List<Form>>> GetMy()
+        {
+            var user = ValidateUser();
+
+            var forms = await FormService.GetMy(user);
+
+            return Ok(forms.ToDTO(mapper));
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<Form>> GetById([FromRoute] string id)
         {
             ValidateUser();
 
             var form = await FormService.GetById(id);
+
+            return Ok(form.ToDTO(mapper));
+        }
+
+        [HttpGet]
+        [Route("{id}/details")]
+        public async Task<ActionResult<FormDetails>> GetDetailsById([FromRoute] string id)
+        {
+            var user = ValidateUser();
+
+            var form = await FormService.GetDetailsById(id, user.Username);
 
             return Ok(form.ToDTO(mapper));
         }

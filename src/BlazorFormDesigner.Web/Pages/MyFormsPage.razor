@@ -1,5 +1,24 @@
-﻿<h3>Component1</h3>
+﻿@page "/myforms"
+
+<Container Width="1452px" Top="80px" Bottom="70px">
+    @if (Forms != null)
+    {
+        <h3 style="margin: 20px;">My forms</h3>
+        @foreach (var form in Forms)
+        {
+            <CreatedForm Form=@form />
+        }
+    }
+</Container>
 
 @code {
+    [Inject]
+    private FormService FormService { get; set; }
 
+    private IEnumerable<Form> Forms { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Forms = await FormService.GetMy();
+    }
 }

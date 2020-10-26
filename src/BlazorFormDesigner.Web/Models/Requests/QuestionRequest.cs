@@ -6,12 +6,12 @@ namespace BlazorFormDesigner.Web.Models
     public class QuestionRequest
     {
         [Required]
-        [MinLength(10)]
+        [MinLength(5)]
         [MaxLength(100)]
         public string Title { get; set; }
 
         [Required]
-        [MinLength(50)]
+        [MinLength(10)]
         [MaxLength(1000)]
         public string Description { get; set; }
 

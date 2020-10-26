@@ -14,18 +14,8 @@
             <ValidationMessage For=@(() => Model.Type) />
         </p>
         <MatBody1 Class="subtitle">Options</MatBody1>
-        <Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
-            @foreach (var option in Model.Options)
-            {
-                <div class="framed" style="margin-right: 10px; align-items: center; width: auto;">
-                    <MatBody1>@option.Content</MatBody1>
-                </div>
-            }
-        </Horizontal>
-        <Horizontal>
-            <MatTextField @bind-Value=@Option ValidationDisabled="true" Label="Option" Style="width: 90%;" Outlined="true" />
-            <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
-        </Horizontal>
+        <MatCheckbox @bind-Value=@Model.IsCorrected Style="margin-left: -10px;">This question is corrected.</MatCheckbox>
+        <AnswersEditor Options=@Model.Options Type=@Model.Type Corrected=@Model.IsCorrected OnAdd=@AddOption />
         @if (Error != null)
         {
             <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
@@ -44,8 +34,6 @@
 
     private EditContext EditContext { get; set; }
 
-    private string Option { get; set; }
-
     private string Error { get; set; }
 
     protected override void OnInitialized()
@@ -58,14 +46,10 @@
         EditContext = new EditContext(Model);
     }
 
-    private void AddOption()
+    private void AddOption(Option option)
     {
-        if (!String.IsNullOrEmpty(Option))
-        {
-            Model.Options.Add(new Option { Content = Option });
-            Option = " ";
-            Error = null;
-        }
+        Model.Options.Add(option);
+        Error = null;
     }
 
     private async Task Submit()
@@ -75,7 +59,7 @@
 
     private void InvalidSubmit()
     {
-        if (Model.Options.Count < 2)
+        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Count < 2)
         {
             Error = "Minimum 2 options required for each question.";
         }
@@ -84,6 +68,7 @@
     private void SetType(string value)
     {
         Model.Type = value;
+        Model.Options = new List<Option>();
         EditContext.NotifyValidationStateChanged();
     }
 }

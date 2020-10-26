@@ -19,6 +19,17 @@ namespace BlazorFormDesigner.Web.Services
             return new List<Form>();
         }
 
+        public async Task<IEnumerable<Form>> GetMy()
+        {
+            var response = await AppService.Client.GetAsync("form/my");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<IEnumerable<Form>>();
+            }
+
+            return new List<Form>();
+        }
+
         public async Task<Form> GetById(string id)
         {
             var response = await AppService.Client.GetAsync("form/" + id);

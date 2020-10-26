@@ -96,6 +96,15 @@ namespace BlazorFormDesigner.Database.Repositories
             user.DismissedForms.Add(formId);
             await users.ReplaceOneAsync(u => u.Username == user.Username, user);
         }
+
+        public async Task RegisterCreator(string username, string formId)
+        {
+            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
+            if (user == null) throw new InvalidUsernameException();
+
+            user.CreatedForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
+        }
     }
 }
 

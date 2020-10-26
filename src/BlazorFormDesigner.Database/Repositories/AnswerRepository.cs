@@ -4,6 +4,7 @@ using BlazorFormDesigner.BusinessLogic.Models;
 using BlazorFormDesigner.Database.Converters;
 using BlazorFormDesigner.Database.Settings;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorFormDesigner.Database.Repositories
@@ -22,6 +23,12 @@ namespace BlazorFormDesigner.Database.Repositories
             var entity = response.ToEntity(mapper);
             await responses.InsertOneAsync(entity);
             return entity.ToModel(mapper);
+        }
+
+        public async Task<List<Response>> GetByFormId(string id)
+        {
+            var result = await responses.Find(r => r.FormId == id).ToListAsync();
+            return result.ToModel(mapper);
         }
 
         public async Task<Response> GetByUserIdAndFormId(string userId, string formId)

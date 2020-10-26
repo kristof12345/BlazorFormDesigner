@@ -1,4 +1,5 @@
 ﻿using BlazorFormDesigner.BusinessLogic.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorFormDesigner.BusinessLogic.Interfaces
@@ -7,5 +8,6 @@ namespace BlazorFormDesigner.BusinessLogic.Interfaces
     {
         Task<Response> GetByUserIdAndFormId(string userId, string formId);
         Task<Response> Create(Response response);
+        Task<List<Response>> GetByFormId(string id);
     }
 }

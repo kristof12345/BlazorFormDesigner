@@ -6,7 +6,7 @@
         <h3 style="margin: 20px;">Available forms</h3>
         @foreach (var form in Forms.Where(f => f.Status == FormStatus.Available))
         {
-            <AvailableForm Form=@form />
+            <AvailableForm Form=@form OnDismiss=@Dismiss />
         }
         <h3 style="margin: 20px;">Answered forms</h3>
         @foreach (var form in Forms.Where(f => f.Status == FormStatus.Answered))
@@ -35,6 +35,7 @@
     public async void Dismiss(string id)
     {
         await FormService.Dismiss(id);
+        Forms = await FormService.GetAll();
         this.StateHasChanged();
     }
 }

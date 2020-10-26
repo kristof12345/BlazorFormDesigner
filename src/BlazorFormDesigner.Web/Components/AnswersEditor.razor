@@ -1,5 +1,75 @@
-﻿<h3>Component1</h3>
+﻿@if (Type == QuestionType.SingleChoice.GetAttributeValue() || Type == QuestionType.MultipleChoice.GetAttributeValue())
+{
+    <Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
+        @foreach (var option in Options)
+        {
+            <div class="framed" style="margin-right: 10px; align-items: center; width: auto;">
+                <MatBody1>@option.Content</MatBody1>
+            </div>
+        }
+    </Horizontal>
+    <Horizontal>
+        <MatTextField @bind-Value=@Option ValidationDisabled="true" Label="Option" Style="width: 90%;" Outlined="true" />
+
+        @if (Corrected)
+        {
+            <MatCheckbox @bind-Value=@Correct Style="margin: 15px;">Correct</MatCheckbox>
+        }
+        <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
+    </Horizontal>
+}
+
+@if (Corrected)
+{
+
+    @if (Type == QuestionType.Text.GetAttributeValue() || Type == QuestionType.Numeric.GetAttributeValue())
+    {
+        <Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
+            @foreach (var option in Options)
+            {
+                <div class="framed" style="margin-right: 10px; align-items: center; width: auto;">
+                    <MatBody1>@option.Content</MatBody1>
+                </div>
+            }
+        </Horizontal>
+        <Horizontal>
+            <MatTextField @bind-Value=@Option ValidationDisabled="true" Label="Correct option" Style="width: 90%;" Outlined="true" />
+            <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
+        </Horizontal>
+    }
+}
 
 @code {
 
+    [Parameter]
+    public List<Option> Options { get; set; }
+
+    [Parameter]
+    public string Type { get; set; }
+
+    [Parameter]
+    public bool Corrected { get; set; }
+
+    [Parameter]
+    public EventCallback<Option> OnAdd { get; set; }
+
+    private string Option { get; set; }
+
+    private bool Correct = true;
+
+    protected override void OnParametersSet()
+    {
+        Option = " ";
+        Correct = true;
+    }
+
+    private async Task AddOption()
+    {
+        if (!String.IsNullOrEmpty(Option))
+        {
+            var option = new Option { Content = Option, IsCorrect = Correct };
+            await OnAdd.InvokeAsync(option);
+            Option = " ";
+        }
+    }
 }
