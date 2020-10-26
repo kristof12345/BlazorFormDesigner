@@ -1,21 +1,24 @@
 ﻿<MatH5 Class="center-text">@Question.Title</MatH5>
 <MatH6 Class="center-text" Style="margin: 20px;">@Question.Description</MatH6>
-<Vertical>
-    <Paper Direction="row" Align="left" Margin=@(new Border("0px", "20px"))>
-        <MatBody1>Correct answer:</MatBody1>
+<Horizontal>
+    <Paper Direction="row" Align="left">
+        <MatBody1>Your answer:</MatBody1>
+        @foreach (var option in Question.SelectedOptions)
+        {
+            <MatBody1 Style="margin-left: 5px;">@option</MatBody1>
+        }
+    </Paper>
+    @if (Question.IsCorrected)
+    {
+        <Paper Direction="row" Align="left" Margin=@(new Border("0px", "0px", "0px", "100px"))>
+            <MatBody1>Correct answer:</MatBody1>
             @foreach (var option in Question.Options.Where(a => a.IsCorrect))
             {
                 <MatBody1 Style="margin-left: 5px;">@option.Content</MatBody1>
             }
-    </Paper>
-    <Paper Direction="row" Align="left" Margin=@(new Border("0px", "20px"))>
-        <MatBody1>Your answer:</MatBody1>
-            @foreach (var option in Question.SelectedOptions)
-            {
-                <MatBody1 Style="margin-left: 5px;">@option</MatBody1>
-            }
-    </Paper>
-</Vertical>
+        </Paper>
+    }
+</Horizontal>
 
 @code {
 

@@ -1,6 +1,6 @@
 ﻿@namespace BlazorFormDesigner.Web.Components
 
-<div class="vertical" style=@($"align-items: {Alignment}; justify-content: {Justify}; width: {Width}; height: {Height};")>
+<div class="vertical" style=@($"align-items: {Alignment}; justify-content: {Justify}; width: {Width}; height: {Height}; margin: {Margin.ToString()};")>
     @ChildContent
 </div>
 
@@ -20,5 +20,8 @@
 
     [Parameter]
     public string Height { get; set; } = "auto";
+
+    [Parameter]
+    public Border Margin { get; set; } = new Border("0px");
 
 }

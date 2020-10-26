@@ -67,7 +67,7 @@
     {
         if (!String.IsNullOrEmpty(Option))
         {
-            var option = new Option { Content = Option, IsCorrect = Correct };
+            var option = new Option { Content = Option.Trim(), IsCorrect = Correct };
             await OnAdd.InvokeAsync(option);
             Option = " ";
         }

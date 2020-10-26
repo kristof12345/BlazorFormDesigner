@@ -25,7 +25,7 @@
     private void HandleClick(string answer)
     {
         Selected.Clear();
-        Selected.Add(answer);
+        Selected.Add(answer.Trim());
         OnAnswerChange.InvokeAsync(new Answer { QuestionId = Question.Id, SelectedOptions = Selected });
-    }
+}
 }
