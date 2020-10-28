@@ -17,5 +17,16 @@ namespace BlazorFormDesigner.Web.Services
                 return;
             }
         }
+
+        public async Task<AnswerDetails> GetDetails(string formId, string questionId)
+        {
+            var response = await AppService.Client.GetAsync("answer/" + formId + "/" + questionId);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<AnswerDetails>();
+            }
+
+            return null;
+        }
     }
 }

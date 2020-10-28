@@ -27,5 +27,16 @@ namespace BlazorFormDesigner.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("{formid}/{questionid}")]
+        public async Task<ActionResult<AnswerDetails>> GetByFormIdAndQuestionId([FromRoute] string formid, [FromRoute] string questionid)
+        {
+            ValidateUser();
+
+            var details = await AnswerService.GetDetails(formid, questionid);
+
+            return Ok(details.ToDTO(mapper));
+        }
     }
 }

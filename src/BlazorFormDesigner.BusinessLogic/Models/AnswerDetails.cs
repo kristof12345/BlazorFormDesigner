@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BlazorFormDesigner.Web.Models
+namespace BlazorFormDesigner.BusinessLogic.Models
 {
     public class AnswerDetails
     {

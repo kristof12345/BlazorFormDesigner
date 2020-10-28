@@ -1,5 +1,38 @@
-﻿<h3>Component1</h3>
+﻿<MatH5 Class="center-text">@Question.Title</MatH5>
+<MatH6 Class="center-text" Style="margin: 20px;">@Question.Description</MatH6>
+<Horizontal>
+    @if (Details != null)
+    {
+        @if (Question.IsCorrected)
+        {
+            <Vertical>
+                <MatBody1>Correct answers: @Details.CorrectAnswers</MatBody1>
+                <MatBody1>Incorrect answers: @Details.IncorrectAnswers</MatBody1>
+                @foreach (var key in Details.Answers.Keys)
+                {
+                    <MatBody1>@key : @Details.Answers[key] </MatBody1>
+                }
+            </Vertical>
+        }
+    }
+</Horizontal>
 
 @code {
+
+    [Parameter]
+    public string FormId { get; set; }
+
+    [Parameter]
+    public Question Question { get; set; }
+
+    [Inject]
+    private AnswerService AnswerService { get; set; }
+
+    private AnswerDetails Details { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Details = await AnswerService.GetDetails(FormId, Question.Id);
+    }
 
 }

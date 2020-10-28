@@ -42,5 +42,10 @@ namespace BlazorFormDesigner.Api.Converters
         {
             return model.Select(item => item.ToDTO(mapper));
         }
+
+        public static Web.Models.AnswerDetails ToDTO(this BusinessLogic.Models.AnswerDetails model, IMapper mapper)
+        {
+            return mapper.Map<Web.Models.AnswerDetails>(model);
+        }
     }
 }
