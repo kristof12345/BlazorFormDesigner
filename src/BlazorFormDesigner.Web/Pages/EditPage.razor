@@ -1,5 +1,27 @@
-﻿<h3>Component1</h3>
+﻿@page "/edit/{id}"
+
+@if (Form != null)
+{
+    <Container Width="1852px" Top="70px" Bottom="70px">
+        <FormEditor Form=@Form />
+    </Container>
+}
 
 @code {
 
+    [Parameter]
+    public string Id { get; set; }
+
+    [Inject]
+    private FormService FormService { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    private Form Form { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Form = await FormService.GetById(Id);
+    }
 }

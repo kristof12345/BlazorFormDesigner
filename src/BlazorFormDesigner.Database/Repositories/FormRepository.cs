@@ -41,5 +41,13 @@ namespace BlazorFormDesigner.Database.Repositories
             await forms.InsertOneAsync(entity);
             return entity.ToModel(mapper);
         }
+
+        public async Task<Form> Update(string id, Form form)
+        {
+            var entity = form.ToEntity(mapper);
+            entity.Id = id;
+            await forms.ReplaceOneAsync(r => r.Id == id, entity);
+            return entity.ToModel(mapper);
+        }
     }
 }

@@ -15,5 +15,6 @@
   <ItemGroup>
     <Folder Include="Components\Basic\" />
     <Folder Include="Components\Forms\" />
+    <Folder Include="Components\Options\" />
   </ItemGroup>
 </Project>

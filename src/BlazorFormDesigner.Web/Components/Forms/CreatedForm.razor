@@ -4,7 +4,11 @@
             <MatH4>@Form.Title</MatH4>
             <MatH6 Class="center-text" Style=@($"color: {Colors.Primary};")>@("Created by: " + Form.CreatorId)</MatH6>
             <MatH6 Class="center-text">@Form.Description</MatH6>
-
+            <Horizontal Height="56px">
+                <MatButton Link=@("/edit/" + Form.Id) Raised="true" Style="align-self: flex-end;">Edit </MatButton>
+                <MatBody1 Style=@($"color: {Colors.Primary}; align-self: flex-end; margin-bottom: 7px;")>@(Form.Questions.Count + " questions")</MatBody1>
+                <MatButton Raised="true" Style="align-self: flex-end;">Export </MatButton>
+            </Horizontal>
         </Vertical>
     </div>
     <MatAccordion Multi="true" Style="width: 100%; margin: 0px;">

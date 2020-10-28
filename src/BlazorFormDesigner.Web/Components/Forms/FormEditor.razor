@@ -1,42 +1,41 @@
 ﻿<Paper Margin=@(new Border { Top="30px" }) Padding=@(new Border("120px", "20px" ))>
-    <MatH4 Class="title" Style="padding-bottom: 20px;">Create a new Form</MatH4>
-    <EditForm OnValidSubmit=@Submit OnInvalidSubmit=@InvalidSubmit EditContext=@EditContext>
-        <DataAnnotationsValidator />
-        <p>
-            <MatTextField @bind-Value=@Model.Title Label="Title" Outlined="true" />
-            <ValidationMessage For=@(() => Model.Title) />
-        </p>
-        <p>
-            <MatTextField @bind-Value=@Model.Description Label="Topic" TextArea="true" Outlined="true" />
-            <ValidationMessage For=@(() => Model.Description) />
-        </p>
-        <MatBody1 Class="subtitle">Questions</MatBody1>
-        @foreach (var question in Model.Questions)
-        {
-            <div class="framed">
-                <MatH5 Style="padding: 20px;">@question.Title</MatH5>
-                @foreach (var option in question.Options)
-                {
-                    <MatH6 Style="padding: 20px;">@option.Content</MatH6>
-                }
-            </div>
-        }
-        @if (CurrentQuestion != null)
-        {
-            <QuestionEditor Model=@CurrentQuestion OnFinish=@SaveQuestion /> }
-        else
-        {
-            <MatButton OnClick=@AddQuestion Type="button" Style=@($"color: {Colors.Warning}; border-color: {Colors.Warning} !important; margin-top: 10px; margin-bottom: 10px;") Outlined="true">Create question</MatButton>
-        }
-        @if (Error != null)
-        {
-            <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
-        }
-        <Horizontal>
-            <MatButton Type="reset" OnClick=@Reset Raised="true" Style="margin-top: 10px;">Clear</MatButton>
-            <MatButton Type="submit" Disabled=@(CurrentQuestion != null) Raised="true" Style="margin-top: 10px;">Create Form</MatButton>
-        </Horizontal>
-    </EditForm>
+    <MatH4 Class="title" Style="padding-bottom: 20px;">Edit a Form</MatH4>
+    <div class="wide">
+        <EditForm OnValidSubmit=@Submit OnInvalidSubmit=@InvalidSubmit EditContext=@EditContext>
+            <DataAnnotationsValidator />
+            <p>
+                <MatTextField @bind-Value=@Model.Title Label="Title" Outlined="true" />
+                <ValidationMessage For=@(() => Model.Title) />
+            </p>
+            <p>
+                <MatTextField @bind-Value=@Model.Description Label="Topic" TextArea="true" Outlined="true" />
+                <ValidationMessage For=@(() => Model.Description) />
+            </p>
+            <MatBody1 Class="subtitle">Questions</MatBody1>
+            @foreach (var question in Model.Questions)
+            {
+                <div class="framed">
+                    <MatH6 Style="padding: 10px;">@question.Title</MatH6>
+                    <OptionsList Options=@question.Options />
+                </div>
+            }
+            @if (CurrentQuestion != null)
+            {
+                <QuestionEditor Model=@CurrentQuestion OnFinish=@SaveQuestion /> }
+            else
+            {
+                <MatButton OnClick=@AddQuestion Type="button" Style=@($"color: {Colors.Warning}; border-color: {Colors.Warning} !important; margin-top: 10px; margin-bottom: 10px;") Outlined="true">Create question</MatButton>
+            }
+            @if (Error != null)
+            {
+                <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
+            }
+            <Horizontal>
+                <MatButton Link=@("/myforms") Type="button" Raised="true" Style="margin-top: 10px;">Cancel</MatButton>
+                <MatButton Type="submit" Disabled=@(CurrentQuestion != null) Raised="true" Style="margin-top: 10px;">Save</MatButton>
+            </Horizontal>
+        </EditForm>
+    </div>
 </Paper>
 
 @code {
@@ -47,9 +46,12 @@
     [Inject]
     NavigationManager NavigationManager { get; set; }
 
+    [Parameter]
+    public Form Form { get; set; }
+
     private EditContext EditContext { get; set; }
 
-    private FormRequest Model { get; set; } = new FormRequest { Questions = new List<QuestionRequest>() };
+    private FormRequest Model { get; set; }
 
     private QuestionRequest CurrentQuestion { get; set; }
 
@@ -57,11 +59,13 @@
 
     protected override void OnInitialized()
     {
+        Model = Form.ToRequest();
         EditContext = new EditContext(Model);
     }
 
     protected override void OnParametersSet()
     {
+        Model = Form.ToRequest();
         EditContext = new EditContext(Model);
         CurrentQuestion = null;
     }
@@ -80,14 +84,8 @@
 
     private async Task Submit()
     {
-        await FormService.Create(Model);
+        await FormService.Update(Form.Id, Model);
         NavigationManager.NavigateTo("myforms");
-    }
-
-    private void Reset()
-    {
-        Model = new FormRequest { Questions = new List<QuestionRequest>() };
-        CurrentQuestion = null;
     }
 
     private void InvalidSubmit()

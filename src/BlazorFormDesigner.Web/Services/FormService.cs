@@ -46,6 +46,11 @@ namespace BlazorFormDesigner.Web.Services
             await AppService.Client.PostAsJsonAsync("form", request);
         }
 
+        public async Task Update(string id, FormRequest request)
+        {
+            await AppService.Client.PutAsJsonAsync("form/" + id, request);
+        }
+
         public async Task Dismiss(string id)
         {
             await AppService.Client.PutAsJsonAsync("form/" + id + "/dismiss", "dismiss");

@@ -13,9 +13,9 @@
             <MatSelectItem Value=@Model.Type ValueChanged=@((string value)=> SetType(value)) ValueExpression=@(()=> Model.Type) Items=@(EnumExtensions.GetAttributeList<QuestionType>()) Label="Question type" Outlined="true" />
             <ValidationMessage For=@(() => Model.Type) />
         </p>
-        <MatBody1 Class="subtitle">Options</MatBody1>
         <MatCheckbox @bind-Value=@Model.IsCorrected Style="margin-left: -10px;">This question is corrected.</MatCheckbox>
-        <AnswersEditor Options=@Model.Options Type=@Model.Type Corrected=@Model.IsCorrected OnAdd=@AddOption />
+        <MatBody1 Class="subtitle">Options</MatBody1>
+        <OptionsEditor Options=@Model.Options Type=@Model.Type Corrected=@Model.IsCorrected OnAdd=@AddOption OnDelete=@DeleteOption />
         @if (Error != null)
         {
             <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
@@ -50,6 +50,11 @@
     {
         Model.Options.Add(option);
         Error = null;
+    }
+
+    private void DeleteOption(string option)
+    {
+        Model.Options.RemoveAll(o => o.Content == option);
     }
 
     private async Task Submit()

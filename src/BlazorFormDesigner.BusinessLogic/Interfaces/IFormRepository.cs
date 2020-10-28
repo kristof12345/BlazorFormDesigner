@@ -10,5 +10,6 @@ namespace BlazorFormDesigner.BusinessLogic.Interfaces
         Task<List<Form>> GetByUser(string username);
         Task<Form> GetById(string id);
         Task<Form> Create(Form form);
+        Task<Form> Update(string id, Form form);
     }
 }

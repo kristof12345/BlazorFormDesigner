@@ -1,5 +1,25 @@
-﻿<h3>Component1</h3>
+﻿<div class="framed" style=@($"margin-right: 10px; align-items: center; width: auto; flex-direction: row; height: 36px; background-color: {getColor()};")>
+    <MatBody1>@Option.Content</MatBody1>
+    <MatIconButton OnClick=@Delete Icon="delete"></MatIconButton>
+</div>
 
 @code {
 
+    [Parameter]
+    public Option Option { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDelete { get; set; }
+
+    private string getColor()
+    {
+        if (Option.IsCorrect)
+            return "green";
+        return "white";
+    }
+
+    private async Task Delete()
+    {
+        await OnDelete.InvokeAsync(Option.Content);
+    }
 }

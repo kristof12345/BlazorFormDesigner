@@ -1,6 +1,6 @@
 ﻿<Paper Margin=@(new Border { Top="30px" }) Padding=@(new Border("120px", "20px" ))>
     <MatH4 Class="title" Style="padding-bottom: 20px;">Create a new Form</MatH4>
-    <div class="framed">
+    <div class="wide">
         <EditForm OnValidSubmit=@Submit OnInvalidSubmit=@InvalidSubmit EditContext=@EditContext>
             <DataAnnotationsValidator />
             <p>
@@ -15,11 +15,8 @@
             @foreach (var question in Model.Questions)
             {
                 <div class="framed">
-                    <MatH5 Style="padding: 20px;">@question.Title</MatH5>
-                    @foreach (var option in question.Options)
-                    {
-                        <MatH6 Style="padding: 20px;">@option.Content</MatH6>
-                    }
+                    <MatH6 Style="padding: 10px;">@question.Title</MatH6>
+                    <OptionsList Options=@question.Options />
                 </div>
             }
             @if (CurrentQuestion != null)

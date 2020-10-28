@@ -1,5 +1,15 @@
-﻿<h3>Component1</h3>
+﻿<Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
+    @foreach (var option in Options)
+    {
+        <div class="framed" style=@($"margin-right: 10px; align-items: center; width: auto; flex-direction: row;")>
+            <MatBody1>@option.Content</MatBody1>
+        </div>
+    }
+</Horizontal>
 
 @code {
+
+    [Parameter]
+    public List<Option> Options { get; set; }
 
 }

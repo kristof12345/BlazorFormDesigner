@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BlazorFormDesigner.Web.Extensions;
 
 namespace BlazorFormDesigner.Web.Models
 {
@@ -26,5 +27,32 @@ namespace BlazorFormDesigner.Web.Models
         public double Points { get; set; }
 
         public double MaxPoints { get; set; }
+
+        internal FormRequest ToRequest()
+        {
+            var request = new FormRequest
+            {
+                Title = Title,
+                Description = Description,
+                IsProtected = IsProtected,
+                Password = Password,
+                Questions = new List<QuestionRequest>()
+            };
+
+            foreach (var question in Questions)
+            {
+                var q = new QuestionRequest
+                {
+                    Title = question.Title,
+                    Type = question.Type.GetAttributeValue()
+                };
+                ;
+                q.Description = question.Description;
+                q.IsCorrected = question.IsCorrected;
+                q.Options = question.Options;
+                request.Questions.Add(q);
+            }
+            return request;
+        }
     }
 }

@@ -72,6 +72,17 @@ namespace BlazorFormDesigner.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult> Update([FromRoute] string id, FormRequest form)
+        {
+            var user = ValidateUser();
+
+            await FormService.Update(id, user, form.ToModel(mapper));
+
+            return Ok();
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Form>> Delete([FromRoute] string id)

@@ -106,6 +106,14 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return await FormRepository.Create(form);
         }
 
+        public async Task<Form> Update(string id, User user, Form form)
+        {
+            //TODO: validation
+            form.CreationDate = DateTime.Now;
+            form.CreatorId = user.Username;
+            return await FormRepository.Update(id, form);
+        }
+
         public async Task<Form> Delete(string id, User user)
         {
             var form = await FormRepository.GetById(id);
