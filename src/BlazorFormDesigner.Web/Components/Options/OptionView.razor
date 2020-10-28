@@ -1,4 +1,4 @@
-﻿<div class="framed" style=@($"margin-right: 10px; align-items: center; width: auto; flex-direction: row; height: 36px; background-color: {getColor()};")>
+﻿<div class="framed" style=@($"margin-right: 10px; align-items: center; width: auto; flex-direction: row; height: 36px; color: {getColor()};")>
     <MatBody1>@Option.Content</MatBody1>
     <MatIconButton OnClick=@Delete Icon="delete"></MatIconButton>
 </div>
@@ -14,8 +14,8 @@
     private string getColor()
     {
         if (Option.IsCorrect)
-            return "green";
-        return "white";
+            return "#5cb85c";
+        return "black";
     }
 
     private async Task Delete()

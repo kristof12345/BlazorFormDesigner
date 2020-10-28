@@ -14,14 +14,12 @@
             <MatBody1 Class="subtitle">Questions</MatBody1>
             @foreach (var question in Model.Questions)
             {
-                <div class="framed">
-                    <MatH6 Style="padding: 10px;">@question.Title</MatH6>
-                    <OptionsList Options=@question.Options />
-                </div>
+                <AddedQuestionView Question=@question OnEdit=@EditQuestion OnDelete=@DeleteQuestion />
             }
             @if (CurrentQuestion != null)
             {
-                <QuestionEditor Model=@CurrentQuestion OnFinish=@SaveQuestion /> }
+                <QuestionEditor Model=@CurrentQuestion OnFinish=@SaveQuestion />
+            }
             else
             {
                 <MatButton OnClick=@AddQuestion Type="button" Style=@($"color: {Colors.Warning}; border-color: {Colors.Warning} !important; margin-top: 10px; margin-bottom: 10px;") Outlined="true">Create question</MatButton>
@@ -74,6 +72,18 @@
     {
         Model.Questions.Add(question);
         CurrentQuestion = null;
+        Error = null;
+    }
+
+    private void DeleteQuestion(QuestionRequest question)
+    {
+        Model.Questions.Remove(question);
+    }
+
+    private void EditQuestion(QuestionRequest question)
+    {
+        Model.Questions.Remove(question);
+        CurrentQuestion = question;
         Error = null;
     }
 

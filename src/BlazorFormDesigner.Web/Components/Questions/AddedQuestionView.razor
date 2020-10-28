@@ -1,5 +1,33 @@
-﻿<h3>Component1</h3>
+﻿<div class="framed">
+    <Horizontal>
+        <Horizontal Alignment=@HorizontalAlignment.Left Justify=@VerticalAlignment.Center>
+            <MatH6 Style="padding: 10px;">@Question.Title</MatH6><p>&nbsp;</p><MatBody1 Style=@($"color: {Colors.Primary};")>(@Question.Type)</MatBody1>
+        </Horizontal>
+        <MatIconButton OnClick=@EditQuestion Icon="edit" />
+        <MatIconButton OnClick=@DeleteQuestion Icon="delete" />
+    </Horizontal>
+    <OptionsList Options=@Question.Options />
+</div>
 
 @code {
+
+    [Parameter]
+    public QuestionRequest Question { get; set; }
+
+    [Parameter]
+    public EventCallback<QuestionRequest> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<QuestionRequest> OnDelete { get; set; }
+
+    private async Task EditQuestion()
+    {
+        await OnEdit.InvokeAsync(Question);
+    }
+
+    private async Task DeleteQuestion()
+    {
+        await OnDelete.InvokeAsync(Question);
+    }
 
 }

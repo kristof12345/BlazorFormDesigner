@@ -1,6 +1,6 @@
 ﻿@namespace BlazorFormDesigner.Web.Components
 
-<div class="horizontal" style=@($"justify-content: {Alignment}; align-items: {Justify}; width: {Width}; height: {Height}; flex-wrap: {Wrap}")>
+<div class="horizontal" style=@($"justify-content: {Alignment}; align-items: {Justify}; width: {Width}; height: {Height}; flex-wrap: {Wrap}; padding: {Padding.ToString()};")>
     @ChildContent
 </div>
 
@@ -23,5 +23,8 @@
 
     [Parameter]
     public string Wrap { get; set; } = FlexWrap.Unset;
+
+    [Parameter]
+    public Border Padding { get; set; } = new Border("0px");
 
 }

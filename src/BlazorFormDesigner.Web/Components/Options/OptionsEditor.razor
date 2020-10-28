@@ -22,7 +22,12 @@
 
     @if (Type == QuestionType.Text.GetAttributeValue() || Type == QuestionType.Numeric.GetAttributeValue())
     {
-        <OptionsList Options=@Options />
+        <Horizontal Wrap=@FlexWrap.Wrap Alignment=@HorizontalAlignment.Left>
+            @foreach (var option in Options)
+            {
+                <OptionView Option=@option OnDelete=@DeleteOption />
+            }
+        </Horizontal>
         <Horizontal>
             <MatTextField @bind-Value=@Option ValidationDisabled="true" Label="Correct option" Style="width: 90%;" Outlined="true" />
             <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>

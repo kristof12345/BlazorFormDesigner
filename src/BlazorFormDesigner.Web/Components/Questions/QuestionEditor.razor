@@ -48,8 +48,27 @@
 
     private void AddOption(Option option)
     {
-        Model.Options.Add(option);
-        Error = null;
+        var error = Validate(option);
+        if (error == null)
+        {
+            Model.Options.Add(option);
+        }
+        Error = error;
+    }
+
+    private string Validate(Option option)
+    {
+        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue())
+        {
+            if (Model.Options.Count > 0) return "This question type only allows one option.";
+        }
+
+        if (Model.Type == QuestionType.SingleChoice.GetAttributeValue())
+        {
+            if (option.IsCorrect && Model.Options.Where(o => o.IsCorrect).Count() > 0) return "This question type only allows one correct option.";
+        }
+
+        return null;
     }
 
     private void DeleteOption(string option)
@@ -59,7 +78,34 @@
 
     private async Task Submit()
     {
-        await OnFinish.InvokeAsync(Model);
+        var error = ValidateOptions();
+        if (error == null)
+        {
+            await OnFinish.InvokeAsync(Model);
+        }
+        Error = error;
+    }
+
+    private string ValidateOptions()
+    {
+        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Count < 2)
+        {
+            return "Minimum 2 options required for each question.";
+        }
+
+        if (!Model.IsCorrected) return null;
+
+        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue())
+        {
+            if (Model.Options.Where(o => o.IsCorrect).Count() != 1) return "This question type requires one correct option.";
+        }
+
+        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue())
+        {
+            if (Model.Options.Where(o => o.IsCorrect).Count() == 0) return "This question type requires at least one correct option.";
+        }
+
+        return null;
     }
 
     private void InvalidSubmit()
