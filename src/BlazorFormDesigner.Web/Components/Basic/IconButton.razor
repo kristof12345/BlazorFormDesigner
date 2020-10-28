@@ -1,5 +1,19 @@
-﻿<h3>Component1</h3>
+﻿<MatButton Link="@Link" Style="width: 120px; height: 80px;">
+    <Vertical>
+        <MatIcon Style="font-size: 50px;" Icon="@Icon" />
+        <div>@Text</div>
+    </Vertical>
+</MatButton>
 
 @code {
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public string Link { get; set; }
 
 }
