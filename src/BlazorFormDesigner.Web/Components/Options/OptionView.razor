@@ -1,7 +1,7 @@
-﻿<div class="framed" style=@($"margin-right: 10px; align-items: center; width: auto; flex-direction: row; height: 36px; color: {getColor()};")>
-    <MatBody1>@Option.Content</MatBody1>
+﻿<Horizontal Justify=@VerticalAlignment.Center>
+    <MatTextField @bind-Value=@Option.Content ValidationDisabled="true" Label="Correct option" Style="width: 90%;" Outlined="true" />
     <MatIconButton OnClick=@Delete Icon="delete"></MatIconButton>
-</div>
+</Horizontal>
 
 @code {
 
@@ -10,13 +10,6 @@
 
     [Parameter]
     public EventCallback<string> OnDelete { get; set; }
-
-    private string getColor()
-    {
-        if (Option.IsCorrect)
-            return "#5cb85c";
-        return "black";
-    }
 
     private async Task Delete()
     {

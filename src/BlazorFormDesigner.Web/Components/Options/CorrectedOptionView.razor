@@ -1,5 +1,5 @@
 ﻿<Horizontal Justify=@VerticalAlignment.Center>
-    <MatTextField @bind-Value=@Option.Content ValidationDisabled="true" Label="Correct option" Style="width: 90%;" Outlined="true" />
+    <MatTextField @bind-Value=@Option.Content ValidationDisabled="true" Label="Option" Style="width: 90%;" Outlined="true" />
     <MatCheckbox @bind-Value=@Option.IsCorrect Style="margin: 15px;">Correct</MatCheckbox>
     <MatIconButton OnClick=@Delete Icon="delete"></MatIconButton>
 </Horizontal>

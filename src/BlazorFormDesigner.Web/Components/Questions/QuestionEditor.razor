@@ -14,11 +14,10 @@
             <ValidationMessage For=@(() => Model.Type) />
         </p>
         <MatCheckbox @bind-Value=@Model.IsCorrected Style="margin-left: -10px;">This question is corrected.</MatCheckbox>
-        <MatBody1 Class="subtitle">Options</MatBody1>
         <OptionsEditor Options=@Model.Options Type=@Model.Type Corrected=@Model.IsCorrected OnAdd=@AddOption OnDelete=@DeleteOption />
         @if (Error != null)
         {
-            <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
+            <p class="validation-message" style="width: 100%; margin-bottom: 10px; margin-top: 10px;">@Error </p>
         }
         <MatButton Type="submit" Style="width: 100%; margin-top: 10px; margin-bottom: 10px;" Raised="true">Add question</MatButton>
     </EditForm>
@@ -48,27 +47,8 @@
 
     private void AddOption(Option option)
     {
-        var error = Validate(option);
-        if (error == null)
-        {
-            Model.Options.Add(option);
-        }
-        Error = error;
-    }
-
-    private string Validate(Option option)
-    {
-        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue())
-        {
-            if (Model.Options.Count > 0) return "This question type only allows one option.";
-        }
-
-        if (Model.Type == QuestionType.SingleChoice.GetAttributeValue())
-        {
-            if (option.IsCorrect && Model.Options.Where(o => o.IsCorrect).Count() > 0) return "This question type only allows one correct option.";
-        }
-
-        return null;
+        Model.Options.Add(option);
+        Error = null;
     }
 
     private void DeleteOption(string option)
@@ -100,9 +80,9 @@
             if (Model.Options.Where(o => o.IsCorrect).Count() != 1) return "This question type requires one correct option.";
         }
 
-        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue())
+        if (Model.Type == QuestionType.MultipleChoice.GetAttributeValue())
         {
-            if (Model.Options.Where(o => o.IsCorrect).Count() == 0) return "This question type requires at least one correct option.";
+            if (Model.Options.Where(o => o.IsCorrect).Count() < 2) return "This question type requires at least two correct option.";
         }
 
         return null;
@@ -119,7 +99,12 @@
     private void SetType(string value)
     {
         Model.Type = value;
-        Model.Options = new List<Option>();
+        if (Model.Options.Count == 0)
+        {
+            Model.Options.Add(new Option());
+            Model.Options.Add(new Option());
+            Model.Options.Add(new Option());
+        }
         EditContext.NotifyValidationStateChanged();
     }
 }
