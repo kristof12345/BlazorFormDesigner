@@ -1,0 +1,19 @@
+﻿<Horizontal Justify=@VerticalAlignment.Center>
+    <MatTextField @bind-Value=@Option.Content ValidationDisabled="true" Label="Correct option" Style="width: 90%;" Outlined="true" />
+    <MatCheckbox @bind-Value=@Option.IsCorrect Style="margin: 15px;">Correct</MatCheckbox>
+    <MatIconButton OnClick=@Delete Icon="delete"></MatIconButton>
+</Horizontal>
+
+@code {
+
+    [Parameter]
+    public Option Option { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDelete { get; set; }
+
+    private async Task Delete()
+    {
+        await OnDelete.InvokeAsync(Option.Content);
+    }
+}
