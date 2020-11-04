@@ -45,11 +45,9 @@ else
     [Parameter]
     public EventCallback<string> OnDelete { get; set; }
 
-    private bool Correct = true;
-
     private async Task AddOption()
     {
-        var option = new Option { Content = " ", IsCorrect = Correct };
+        var option = new Option { Content = " " };
         await OnAdd.InvokeAsync(option);
     }
 

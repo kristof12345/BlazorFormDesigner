@@ -61,6 +61,16 @@
         var error = ValidateOptions();
         if (error == null)
         {
+            var options = new List<Option>();
+            foreach (var option in Model.Options)
+            {
+                if (!string.IsNullOrWhiteSpace(option.Content))
+                {
+                    if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue()) option.IsCorrect = true;
+                    options.Add(option);
+                }
+            }
+            Model.Options = options;
             await OnFinish.InvokeAsync(Model);
         }
         Error = error;
@@ -75,7 +85,12 @@
 
         if (!Model.IsCorrected) return null;
 
-        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue())
+        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue())
+        {
+            if (Model.Options.Count() != 1) return "This question type requires one correct option.";
+        }
+
+        if (Model.Type == QuestionType.SingleChoice.GetAttributeValue())
         {
             if (Model.Options.Where(o => o.IsCorrect).Count() != 1) return "This question type requires one correct option.";
         }
@@ -99,12 +114,20 @@
     private void SetType(string value)
     {
         Model.Type = value;
-        if (Model.Options.Count == 0)
+
+        if (Model.Options.Count == 0 && (Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()))
         {
             Model.Options.Add(new Option());
             Model.Options.Add(new Option());
             Model.Options.Add(new Option());
         }
+
+        if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue())
+        {
+            Model.Options.Clear();
+            Model.Options.Add(new Option());
+        }
+
         EditContext.NotifyValidationStateChanged();
     }
-}
+    }

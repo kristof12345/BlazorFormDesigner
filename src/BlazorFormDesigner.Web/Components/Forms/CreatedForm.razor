@@ -7,7 +7,7 @@
             <Horizontal Height="56px">
                 <MatButton Link=@("/edit/" + Form.Id) Raised="true" Style="align-self: flex-end;">Edit </MatButton>
                 <MatBody1 Style=@($"color: {Colors.Primary}; align-self: flex-end; margin-bottom: 7px;")>@(Form.Questions.Count + " questions")</MatBody1>
-                <MatButton Raised="true" Style="align-self: flex-end;">Export </MatButton>
+                <MatButton Link=@("https://localhost:5001/answer/" + Form.Id) Raised="true" Style="align-self: flex-end;">Export </MatButton>
             </Horizontal>
         </Vertical>
     </div>
