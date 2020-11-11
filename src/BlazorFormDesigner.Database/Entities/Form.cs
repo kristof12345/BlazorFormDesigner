@@ -15,9 +15,13 @@ namespace BlazorFormDesigner.Database.Entities
 
         public string Description { get; set; }
 
-        public bool IsProtected { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public DateTime StartDate { get; set; }
 
-        public string Password { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public DateTime EndDate { get; set; }
+
+        public int AvailableMinutes { get; set; }
 
         public string CreatorId { get; set; }
 

@@ -12,9 +12,11 @@ namespace BlazorFormDesigner.Web.Models
 
         public string Description { get; set; }
 
-        public bool IsProtected { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public string Password { get; set; }
+        public DateTime EndDate { get; set; }
+
+        public int AvailableMinutes { get; set; }
 
         public FormStatus Status { get; set; }
 
@@ -33,9 +35,10 @@ namespace BlazorFormDesigner.Web.Models
             var request = new FormRequest
             {
                 Title = Title,
+                StartDate = StartDate,
+                EndDate = EndDate,
+                AvailableMinutes = AvailableMinutes,
                 Description = Description,
-                IsProtected = IsProtected,
-                Password = Password,
                 Questions = new List<QuestionRequest>()
             };
 

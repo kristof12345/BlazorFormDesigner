@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlazorFormDesigner.Web.Models
@@ -20,8 +21,14 @@ namespace BlazorFormDesigner.Web.Models
         [MaxLength(100)]
         public List<QuestionRequest> Questions { get; set; }
 
-        public bool IsProtected { get; set; }
+        [Required]
+        public DateTime? StartDate { get; set; }
 
-        public string Password { get; set; }
+        [Required]
+        public DateTime? EndDate { get; set; }
+
+        [Required]
+        [Range(1, 100000)]
+        public int AvailableMinutes { get; set; }
     }
 }
