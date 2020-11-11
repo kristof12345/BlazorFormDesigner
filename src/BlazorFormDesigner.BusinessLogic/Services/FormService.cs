@@ -28,7 +28,7 @@ namespace BlazorFormDesigner.BusinessLogic.Services
 
             foreach (var form in forms)
             {
-                form.Status = await getStatus(user.Username, form.Id);
+                form.Status = await getStatus(user.Username, form);
                 form.MaxPoints = form.Questions.Where(q => q.IsCorrected).Count() * 1.0;
             }
 
@@ -68,12 +68,15 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return response;
         }
 
-        private async Task<FormStatus> getStatus(string username, string formId)
+        private async Task<FormStatus> getStatus(string username, Form form)
         {
-            var user = await UserRepository.GetByUsername(username);
+            if (form.EndDate < DateTime.Now) return FormStatus.Expired;
+            if (form.StartDate > DateTime.Now) return FormStatus.Upcoming;
 
-            if (user.AnsweredForms.Contains(formId)) return FormStatus.Answered;
-            if (user.DismissedForms.Contains(formId)) return FormStatus.Dismissed;
+            var user = await UserRepository.GetByUsername(username);
+            if (user.AnsweredForms.Contains(form.Id)) return FormStatus.Answered;
+            if (user.DismissedForms.Contains(form.Id)) return FormStatus.Dismissed;
+
             return FormStatus.Available;
         }
 

@@ -13,8 +13,13 @@
         {
             <AnsweredForm Form=@form />
         }
-        <h3 style="margin: 20px;">Dismissed forms</h3>
-        @foreach (var form in Forms.Where(f => f.Status == FormStatus.Dismissed))
+        <h3 style="margin: 20px;">Upcoming forms</h3>
+        @foreach (var form in Forms.Where(f => (f.Status == FormStatus.Upcoming)))
+        {
+            <UpcomingForm Form=@form />
+        }
+        <h3 style="margin: 20px;">Expired or dismissed forms</h3>
+        @foreach (var form in Forms.Where(f => (f.Status == FormStatus.Dismissed || f.Status == FormStatus.Expired)))
         {
             <DismissedForm Form=@form />
         }
