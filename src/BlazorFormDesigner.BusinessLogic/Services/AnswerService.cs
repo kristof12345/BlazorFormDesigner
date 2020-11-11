@@ -1,7 +1,9 @@
-﻿using BlazorFormDesigner.BusinessLogic.Extensions;
+﻿using BlazorFormDesigner.BusinessLogic.Exceptions;
+using BlazorFormDesigner.BusinessLogic.Extensions;
 using BlazorFormDesigner.BusinessLogic.Interfaces;
 using BlazorFormDesigner.BusinessLogic.Models;
 using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,16 +28,13 @@ namespace BlazorFormDesigner.BusinessLogic.Services
 
         public async Task<Response> Save(User user, string formId, List<Answer> answers)
         {
-            var response = new Response
-            {
-                FormId = formId,
-                Answers = answers,
-                UserId = user.Username
-            };
+            var form = await FormRepository.GetById(formId);
+
+            if (form.StartDate > DateTime.Now || form.EndDate < DateTime.Now) throw new FormException("This form is currently not available.");
 
             await UserRepository.RegisterAnswer(user.Username, formId);
 
-            return await AnswerRepository.Create(response);
+            return await AnswerRepository.Create(new Response { FormId = formId, Answers = answers, UserId = user.Username });
         }
 
         public async Task<AnswerDetails> GetDetails(string formid, string questionid)

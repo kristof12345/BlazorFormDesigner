@@ -1,10 +1,13 @@
 ﻿using System;
 namespace BlazorFormDesigner.BusinessLogic.Exceptions
 {
-    public class FormExceptions
+    public class FormException : Exception
     {
-        public FormExceptions()
+        public string Text { get; }
+
+        public FormException(string text)
         {
+            Text = text;
         }
     }
 }

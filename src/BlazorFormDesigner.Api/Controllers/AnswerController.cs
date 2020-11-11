@@ -27,15 +27,15 @@ namespace BlazorFormDesigner.Api.Controllers
             try
             {
                 ValidateUser();
+
+                var result = await AnswerService.Save(User, request.FormId, request.Answers.ToModel(mapper));
+
+                return Ok(result);
             }
             catch (Exception)
             {
                 return Unauthorized();
             }
-
-            var result = await AnswerService.Save(User, request.FormId, request.Answers.ToModel(mapper));
-
-            return Ok(result);
         }
 
         [HttpGet]
