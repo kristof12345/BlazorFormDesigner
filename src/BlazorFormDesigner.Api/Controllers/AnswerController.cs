@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace BlazorFormDesigner.Api.Controllers
@@ -25,9 +24,16 @@ namespace BlazorFormDesigner.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Save(Response request)
         {
-            var user = ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
-            var result = await AnswerService.Save(user, request.FormId, request.Answers.ToModel(mapper));
+            var result = await AnswerService.Save(User, request.FormId, request.Answers.ToModel(mapper));
 
             return Ok(result);
         }
@@ -36,7 +42,14 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("{formid}/{questionid}")]
         public async Task<ActionResult<AnswerDetails>> GetByFormIdAndQuestionId([FromRoute] string formid, [FromRoute] string questionid)
         {
-            ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
             var details = await AnswerService.GetDetails(formid, questionid);
 
@@ -49,17 +62,24 @@ namespace BlazorFormDesigner.Api.Controllers
         {
             try
             {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
                 XLWorkbook workbook = await AnswerService.CreateExelDocument(formid);
 
                 string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 string fileName = "answers.xlsx";
 
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return File(content, contentType, fileName);
-                }
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                return File(content, contentType, fileName);
             }
             catch (Exception)
             {

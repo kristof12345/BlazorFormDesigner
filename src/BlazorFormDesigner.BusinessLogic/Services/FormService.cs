@@ -85,17 +85,6 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return await FormRepository.GetById(id);
         }
 
-        public async Task<FormDetails> GetDetailsById(string id, string username)
-        {
-            var form = await FormRepository.GetById(id);
-            if (form.CreatorId != username) return null;
-
-            var answers = AnswerRepository.GetByFormId(id);
-
-            var details = new FormDetails();
-            return details;
-        }
-
         public async Task<List<Form>> GetMy(User user)
         {
             return await FormRepository.GetByUser(user.Username);
@@ -109,9 +98,11 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return await FormRepository.Create(form);
         }
 
-        public async Task<Form> Update(string id, User user, Form form)
+        public async Task<Form> Update(string id, Form form, User user)
         {
-            //TODO: validation
+            var original = await FormRepository.GetById(id);
+            if (original.CreatorId != user.Username) throw new AuthorizationException();
+
             form.CreationDate = DateTime.Now;
             form.CreatorId = user.Username;
             return await FormRepository.Update(id, form);
@@ -119,10 +110,10 @@ namespace BlazorFormDesigner.BusinessLogic.Services
 
         public async Task<Form> Delete(string id, User user)
         {
-            var form = await FormRepository.GetById(id);
-            if (form.CreatorId != user.Username) throw new AuthorizationException();
+            var original = await FormRepository.GetById(id);
+            if (original.CreatorId != user.Username) throw new AuthorizationException();
 
-            return form;
+            return original;
         }
 
         public async Task Dismiss(string id, User user)

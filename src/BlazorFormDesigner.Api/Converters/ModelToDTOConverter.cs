@@ -33,16 +33,6 @@ namespace BlazorFormDesigner.Api.Converters
             return model.Select(item => item.ToDTO(mapper));
         }
 
-        public static Web.Models.FormDetails ToDTO(this BusinessLogic.Models.FormDetails model, IMapper mapper)
-        {
-            return mapper.Map<Web.Models.FormDetails>(model);
-        }
-
-        public static IEnumerable<Web.Models.FormDetails> ToDTO(this IEnumerable<BusinessLogic.Models.FormDetails> model, IMapper mapper)
-        {
-            return model.Select(item => item.ToDTO(mapper));
-        }
-
         public static Web.Models.AnswerDetails ToDTO(this BusinessLogic.Models.AnswerDetails model, IMapper mapper)
         {
             return mapper.Map<Web.Models.AnswerDetails>(model);

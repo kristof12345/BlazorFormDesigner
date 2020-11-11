@@ -24,12 +24,12 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
         {
-            BusinessLogic.Models.User user = null;
-
+            BusinessLogic.Models.User user;
             try
             {
                 user = await UserService.ValidatePassword(request.Username, request.Password);
-            } catch(InvalidUsernameException)
+            }
+            catch (InvalidUsernameException)
             {
                 return NotFound(new ErrorResponse("Invalid username."));
             }

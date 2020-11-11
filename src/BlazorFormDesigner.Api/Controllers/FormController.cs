@@ -5,6 +5,7 @@ using BlazorFormDesigner.BusinessLogic.Services;
 using BlazorFormDesigner.Web.Models;
 using BlazorFormDesigner.Api.Converters;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BlazorFormDesigner.Api.Controllers
 {
@@ -22,9 +23,16 @@ namespace BlazorFormDesigner.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Form>>> GetAll()
         {
-            var user = ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
-            var forms = await FormService.GetAll(user);
+            var forms = await FormService.GetAll(User);
 
             return Ok(forms.ToDTO(mapper));
         }
@@ -33,9 +41,16 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("my")]
         public async Task<ActionResult<List<Form>>> GetMy()
         {
-            var user = ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
-            var forms = await FormService.GetMy(user);
+            var forms = await FormService.GetMy(User);
 
             return Ok(forms.ToDTO(mapper));
         }
@@ -44,20 +59,16 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Form>> GetById([FromRoute] string id)
         {
-            ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
             var form = await FormService.GetById(id);
-
-            return Ok(form.ToDTO(mapper));
-        }
-
-        [HttpGet]
-        [Route("{id}/details")]
-        public async Task<ActionResult<FormDetails>> GetDetailsById([FromRoute] string id)
-        {
-            var user = ValidateUser();
-
-            var form = await FormService.GetDetailsById(id, user.Username);
 
             return Ok(form.ToDTO(mapper));
         }
@@ -65,9 +76,16 @@ namespace BlazorFormDesigner.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Form>> Create(FormRequest form)
         {
-            var user = ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
-            var result = await FormService.Create(form.ToModel(mapper), user);
+            var result = await FormService.Create(form.ToModel(mapper), User);
 
             return Ok(result);
         }
@@ -76,31 +94,48 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Update([FromRoute] string id, FormRequest form)
         {
-            var user = ValidateUser();
-
-            await FormService.Update(id, user, form.ToModel(mapper));
-
-            return Ok();
+            try
+            {
+                ValidateUser();
+                await FormService.Update(id, form.ToModel(mapper), User);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Form>> Delete([FromRoute] string id)
         {
-            var user = ValidateUser();
-
-            var result = await FormService.Delete(id, user);
-
-            return Ok(result);
+            try
+            {
+                ValidateUser();
+                var result = await FormService.Delete(id, User);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpPut]
         [Route("{id}/dismiss")]
         public async Task<ActionResult> Dismiss([FromRoute] string id)
         {
-            var user = ValidateUser();
+            try
+            {
+                ValidateUser();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
 
-            await FormService.Dismiss(id, user);
+            await FormService.Dismiss(id, User);
 
             return Ok();
         }
