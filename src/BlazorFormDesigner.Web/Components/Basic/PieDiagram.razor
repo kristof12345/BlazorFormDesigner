@@ -1,5 +1,19 @@
-﻿<h3>Component1</h3>
+﻿@using Syncfusion.Blazor.Charts;
+
+<SfAccumulationChart Width=@Width Background=@Colors.Transparent>
+    <AccumulationChartTooltipSettings Enable="true"> </AccumulationChartTooltipSettings>
+    <AccumulationChartLegendSettings Visible="false"> </AccumulationChartLegendSettings>
+    <AccumulationChartSeriesCollection>
+        <AccumulationChartSeries DataSource=@Data XName="Id" YName="Data" PointColorMapping="Color"> </AccumulationChartSeries>
+    </AccumulationChartSeriesCollection>
+</SfAccumulationChart>
 
 @code {
+
+    [Parameter]
+    public List<ChartData> Data { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "1700px";
 
 }

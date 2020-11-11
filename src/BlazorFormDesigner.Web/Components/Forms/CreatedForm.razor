@@ -1,4 +1,6 @@
-﻿<Vertical Margin=@(new Border("0px", "0px", "20px", "0px"))>
+﻿@inject IJSRuntime JSRuntime
+
+<Vertical Margin=@(new Border("0px", "0px", "20px", "0px"))>
     <div class="paper" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding-left: 120px; padding-right: 120px; padding-bottom: 20px; padding-top: 20px;">
         <Vertical>
             <MatH4>@Form.Title</MatH4>
@@ -7,7 +9,10 @@
             <Horizontal Height="56px">
                 <MatButton Link=@("/edit/" + Form.Id) Raised="true" Style="align-self: flex-end;">Edit </MatButton>
                 <MatBody1 Style=@($"color: {Colors.Primary}; align-self: flex-end; margin-bottom: 7px;")>@(Form.Questions.Count + " questions")</MatBody1>
-                <MatButton Link=@("https://localhost:5001/answer/" + Form.Id) Raised="true" Style="align-self: flex-end;">Export </MatButton>
+                <div class="matBlazor_theme_f7ee9285-f12d-4afd-b6b5-5149f8a6c758 mdc-button mdc-button--raised mdc-ripple-upgraded" style="align-self: flex-end;" id="matBlazor_id_215c2611-80b8-426a-93c2-6f63f6e7fcf7" _bl_ca03ce07-e70a-44b6-854d-d28d00bd5b3c="">
+            
+                    <a href=@("https://localhost:5001/answer/" + Form.Id) style="color: white;text-decoration: none;" download="answers" target="_blank">Export </a>
+                </div>
             </Horizontal>
         </Vertical>
     </div>

@@ -8,6 +8,7 @@
             <Vertical>
                 <MatBody1>Correct answers: @Details.CorrectAnswers</MatBody1>
                 <MatBody1>Incorrect answers: @Details.IncorrectAnswers</MatBody1>
+                <PieDiagram Data=@FormatData()></PieDiagram>
                 @foreach (var key in Details.Answers.Keys)
                 {
                     <MatBody1>@key : @Details.Answers[key] </MatBody1>
@@ -33,6 +34,14 @@
     protected override async Task OnParametersSetAsync()
     {
         Details = await AnswerService.GetDetails(FormId, Question.Id);
+    }
+
+    private List<ChartData> FormatData()
+    {
+        var data = new List<ChartData>();
+        data.Add(new ChartData { Id="Correct", Data=Details.CorrectAnswers, Color="green" });
+        data.Add(new ChartData { Id = "Incorrect", Data =Details.IncorrectAnswers, Color = "red" });
+        return data;
     }
 
 }

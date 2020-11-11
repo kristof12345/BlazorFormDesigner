@@ -29,8 +29,8 @@
                 <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
             }
             <Horizontal>
-                <MatButton Type="reset" OnClick=@Reset Raised="true" Style="margin-top: 10px;">Clear</MatButton>
-                <MatButton Type="submit" Disabled=@(CurrentQuestion != null) Raised="true" Style="margin-top: 10px;">Create Form</MatButton>
+                <MatButton Type="reset" OnClick=@Reset Style=@($"background-color: {Colors.Error}; margin-top: 10px;") Raised="true">Clear</MatButton>
+                <MatButton Type="submit" Style=@($"background-color: {Colors.Success}; margin-top: 10px;") Disabled=@(CurrentQuestion != null) Raised="true">Create form</MatButton>
             </Horizontal>
         </EditForm>
     </div>

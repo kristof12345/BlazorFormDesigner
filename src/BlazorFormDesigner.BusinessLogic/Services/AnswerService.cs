@@ -127,21 +127,13 @@ namespace BlazorFormDesigner.BusinessLogic.Services
                 for (int index = 1; index <= answers.Count; index++)
                 {
                     worksheet.Cell(index + 1, 1).Value = answers[index - 1].UserId;
-                    worksheet.Cell(index + 1, 2).Value = WriteOptions(answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single().SelectedOptions);
+                    var options = answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single().SelectedOptions;
+                    for (int row = 0; row < options.Count; row++)
+                    {
+                        worksheet.Cell(index + 1, row + 2).Value = options[row];
+                    }
                 }
             }
-        }
-
-        private string WriteOptions(List<string> selectedOptions)
-        {
-            var result = "";
-
-            for (int i = 0; i < selectedOptions.Count; i++)
-            {
-                result += selectedOptions[i];
-                result += "; ";
-            }
-            return result;
         }
     }
 }
