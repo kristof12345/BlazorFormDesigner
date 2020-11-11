@@ -71,7 +71,7 @@ namespace BlazorFormDesigner.BusinessLogic.Services
         public async Task Start(string id, User user)
         {
             var form = await FormRepository.GetById(id);
-            await UserRepository.RegisterStart(user.Username, id, DateTime.Now.AddMinutes(form.AvailableMinutes));
+            await UserRepository.RegisterStart(user.Username, id, DateTime.Now.AddHours(1).AddMinutes(form.AvailableMinutes));
         }
 
         private async Task<FormStatus> getStatus(string username, Form form)
@@ -86,9 +86,12 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return FormStatus.Available;
         }
 
-        public async Task<Form> GetById(string id)
+        public async Task<Form> GetById(string id, User user)
         {
-            return await FormRepository.GetById(id);
+            var form = await FormRepository.GetById(id);
+            var u = await UserRepository.GetByUsername(user.Username);
+            form.RemainingTime = u.StartedForms[id];
+            return form;
         }
 
         public async Task<List<Form>> GetMy(User user)

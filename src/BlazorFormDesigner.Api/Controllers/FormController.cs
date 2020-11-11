@@ -68,7 +68,7 @@ namespace BlazorFormDesigner.Api.Controllers
                 return Unauthorized();
             }
 
-            var form = await FormService.GetById(id);
+            var form = await FormService.GetById(id, User);
 
             return Ok(form.ToDTO(mapper));
         }

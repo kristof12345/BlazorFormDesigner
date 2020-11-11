@@ -18,11 +18,15 @@
             break;
     }
 </Stepper>
+<Countdown OnEnd=Finish Time=@Time />
 
 @code {
 
     [Parameter]
     public List<Question> Questions { get; set; }
+
+    [Parameter]
+    public DateTime Time { get; set; }
 
     [Parameter]
     public EventCallback<List<Answer>> OnFinish { get; set; }

@@ -28,5 +28,7 @@ namespace BlazorFormDesigner.BusinessLogic.Models
         public double Points { get; set; }
 
         public double MaxPoints { get; set; }
+
+        public DateTime RemainingTime { get; set; }
     }
 }

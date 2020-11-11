@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BlazorFormDesigner.BusinessLogic.Models
 {
@@ -19,5 +20,7 @@ namespace BlazorFormDesigner.BusinessLogic.Models
         public List<string> DismissedForms { get; set; }
 
         public List<string> CreatedForms { get; set; }
+
+        public Dictionary<string, DateTime> StartedForms { get; set; }
     }
 }

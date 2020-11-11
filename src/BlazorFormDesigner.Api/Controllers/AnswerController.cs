@@ -32,9 +32,9 @@ namespace BlazorFormDesigner.Api.Controllers
 
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Unauthorized();
+                return Unauthorized(e.Message);
             }
         }
 
@@ -60,15 +60,6 @@ namespace BlazorFormDesigner.Api.Controllers
         [Route("{formid}")]
         public async Task<IActionResult> DownloadExcelDocument([FromRoute] string formid)
         {
-            try
-            {
-                ValidateUser();
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-
             try
             {
                 XLWorkbook workbook = await AnswerService.CreateExelDocument(formid);

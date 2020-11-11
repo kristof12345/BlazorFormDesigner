@@ -4,7 +4,7 @@
 {
     <Container Width="1452px" Top="80px" Bottom="70px">
         <Paper Margin=@(new Border { Top = "10px", Bottom = "30px" }) Padding=@(new Border("120px", "20px"))>
-            <QuestionStepper Questions=@Form.Questions OnFinish=@SendAnswer />
+            <QuestionStepper Questions=@Form.Questions OnFinish=@SendAnswer Time=@Form.RemainingTime />
         </Paper>
     </Container>
 }

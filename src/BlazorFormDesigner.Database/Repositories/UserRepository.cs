@@ -85,7 +85,7 @@ namespace BlazorFormDesigner.Database.Repositories
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
             if (user == null) throw new InvalidUsernameException();
             if (user.AnsweredForms.Contains(formId) || user.DismissedForms.Contains(formId)) throw new FormException("Already answered or dismissed.");
-            if (user.StartedForms[formId] > DateTime.Now.AddSeconds(15)) throw new FormException("Expired. Too long answer time.");
+            if (user.StartedForms[formId].AddSeconds(15) < DateTime.Now) throw new FormException("Expired. Too long answer time.");
 
             user.AnsweredForms.Add(formId);
             await users.ReplaceOneAsync(u => u.Username == user.Username, user);

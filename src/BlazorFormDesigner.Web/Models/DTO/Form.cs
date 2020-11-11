@@ -30,6 +30,8 @@ namespace BlazorFormDesigner.Web.Models
 
         public double MaxPoints { get; set; }
 
+        public DateTime RemainingTime { get; set; }
+
         internal FormRequest ToRequest()
         {
             var request = new FormRequest

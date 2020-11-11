@@ -1,5 +1,56 @@
-﻿<h3>Component1</h3>
+﻿@using System.Threading;
+
+<h1>@Hours : @Minutes : @Seconds</h1>
+
 
 @code {
 
+    [Parameter]
+    public DateTime Time { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnEnd { get; set; }
+
+    private int Seconds { get; set; } = 10;
+    private int Minutes { get; set; } = 10;
+    private int Hours { get; set; } = 10;
+    private bool sent { get; set; } = false;
+
+    protected override void OnParametersSet()
+    {
+        var a = Time - DateTime.Now;
+        Hours = a.Hours;
+        Minutes = a.Minutes;
+        Seconds = a.Seconds;
+        StartCountdown();
+    }
+
+    void StartCountdown()
+    {
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            if (Seconds > 0)
+            {
+                Seconds--;
+
+            }
+            else if (Minutes > 0)
+            {
+                Minutes--;
+                Seconds = 59;
+            }
+            else if (Hours > 0)
+            {
+                Hours--;
+                Minutes = 59;
+                Seconds = 59;
+            }
+            else if(!sent)
+            {
+                sent = true;
+                InvokeAsync(() => { OnEnd.InvokeAsync("hello"); });
+            }
+            InvokeAsync(() => { StateHasChanged(); });
+        }), null, 1000, 1000);
+    }
 }
