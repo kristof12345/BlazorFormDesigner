@@ -11,6 +11,20 @@
                 <MatTextField @bind-Value=@Model.Description Label="Topic" TextArea="true" Outlined="true" />
                 <ValidationMessage For=@(() => Model.Description) />
             </p>
+            <Horizontal>
+                <p class="form-col-2">
+                    <MatDatePicker @bind-Value=@Model.StartDate EnableTime="true" Label="Start date" Format="yyyy. MM. dd. HH:mm" Minimum=@DateTime.Now Outlined="true" Class="date-picker" />
+                    <ValidationMessage For=@(() => Model.StartDate) />
+                </p>
+                <p class="form-col-2">
+                    <MatDatePicker @bind-Value=@Model.EndDate EnableTime="true" Label="End date" Format="yyyy. MM. dd. HH:mm" Minimum=@DateTime.Now Outlined="true" Class="date-picker" />
+                    <ValidationMessage For=@(() => Model.EndDate) />
+                </p>
+            </Horizontal>
+            <p>
+                <MatNumericUpDownField Label="Available time for the form in minutes" @bind-Value=@Model.AvailableMinutes Outlined="true" DecimalPlaces=0 Minimum=0 Maximum=100000 />
+                <ValidationMessage For=@(() => Model.AvailableMinutes) />
+            </p>
             <MatBody1 Class="subtitle">Questions</MatBody1>
             @foreach (var question in Model.Questions)
             {
