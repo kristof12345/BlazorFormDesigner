@@ -1,5 +1,24 @@
-﻿<h3>Component1</h3>
+﻿@page "/myforms/{id}"
+
+<Container Width="1452px" Top="80px" Bottom="70px">
+    @if (Forms != null)
+    {
+        <CreatedForm Form=@Forms.Where(f => f.Id == Id).First() />
+    }
+</Container>
 
 @code {
 
+    [Parameter]
+    public string Id { get; set; }
+
+    [Inject]
+    private FormService FormService { get; set; }
+
+    private IEnumerable<Form> Forms { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Forms = await FormService.GetMy();
+    }
 }

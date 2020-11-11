@@ -1,0 +1,18 @@
+﻿@using MatBlazor;
+
+<Horizontal>
+    @foreach (var item in Data)
+    {
+        <Horizontal Alignment=@HorizontalAlignment.Center>
+            <MatIcon Icon="pie_chart" style=@($"color: {item.Color}; margin-right: 10px;") />
+            <MatBody1>@item.Id : @item.Data</MatBody1>
+        </Horizontal>
+    }
+</Horizontal>
+
+@code {
+
+    [Parameter]
+    public List<ChartData> Data { get; set; }
+
+}

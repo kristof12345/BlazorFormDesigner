@@ -1,0 +1,25 @@
+﻿@using Syncfusion.Blazor.Charts;
+
+<SfChart Width=@Width Background=@Colors.Transparent>
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Visible="false" />
+    <ChartPrimaryYAxis LabelFormat=@("{value}" + Unit) />
+
+    <ChartSeriesCollection>
+        <ChartSeries DataSource=@Data XName="Id" YName="Data" PointColorMapping="Color" Type=@ChartSeriesType.Column ColumnWidth="0.5"> </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+<HorizontalDiagramLegend Data=@Data />
+
+@code {
+
+    [Parameter]
+    public List<ChartData> Data { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "1400px";
+
+    [Parameter]
+    public string Unit { get; set; } = "";
+
+}

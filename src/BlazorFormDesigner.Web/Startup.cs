@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorFormDesigner.Web.Services;
 using Blazored.LocalStorage;
+using Syncfusion.Blazor;
 
 namespace BlazorFormDesigner.Web
 {
@@ -23,6 +24,7 @@ namespace BlazorFormDesigner.Web
             services.AddServerSideBlazor();
 
             services.AddBlazoredLocalStorage();
+            services.AddSyncfusionBlazor();
 
             services.AddSingleton<UserService>();
             services.AddSingleton<FormService>();

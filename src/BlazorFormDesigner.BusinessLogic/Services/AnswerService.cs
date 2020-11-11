@@ -14,6 +14,9 @@ namespace BlazorFormDesigner.BusinessLogic.Services
         private readonly IAnswerRepository AnswerRepository;
         private readonly IUserRepository UserRepository;
 
+        private readonly XLColor red = XLColor.FromArgb(246, 201, 207);
+        private readonly XLColor green = XLColor.FromArgb(202, 232, 204);
+
         public AnswerService(IAnswerRepository answerRepository, IUserRepository userRepository, IFormRepository formRepository)
         {
             AnswerRepository = answerRepository;
@@ -94,26 +97,35 @@ namespace BlazorFormDesigner.BusinessLogic.Services
         private void CreateSummaryTab(Form form, List<Response> answers, XLWorkbook workbook)
         {
             IXLWorksheet worksheet = workbook.Worksheets.Add("Summary");
-            worksheet.Cell(1, 1).Value = "Username";
+            worksheet.Cell(1, 1).Value = form.Title;
+            worksheet.Cell(1, 1).Style.Font.FontSize = 30;
+            worksheet.Cell(2, 1).Value = "https://localhost:5002/myforms/" + form.Id;
+            worksheet.Cell(2, 1).Style.Font.FontSize = 15;
+
+            worksheet.Cell(4, 1).Value = "Username";
             var col = 2;
             foreach (var q in form.Questions)
             {
-                worksheet.Cell(1, col++).Value = q.Title;
+                worksheet.Cell(4, col++).Value = q.Title;
             }
-            worksheet.Cell(1, col).Value = "sum";
+            worksheet.Cell(4, col).Value = "sum";
 
             for (int index = 1; index <= answers.Count; index++)
             {
                 var sum = 0;
                 col = 2;
-                worksheet.Cell(index + 1, 1).Value = answers[index - 1].UserId;
+                worksheet.Cell(index + 4, 1).Value = answers[index - 1].UserId;
                 foreach (var q in form.Questions)
                 {
                     var points = calculatePoints(q.Id, answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single(), form);
-                    worksheet.Cell(index + 1, col++).Value = points;
+                    worksheet.Cell(index + 4, col++).Value = points;
+                    if (q.IsCorrected)
+                    {
+                        worksheet.Cell(index + 4, col).Style.Fill.BackgroundColor = points == 1 ? green : red;
+                    }
                     sum += points;
                 }
-                worksheet.Cell(index + 1, col).Value = sum;
+                worksheet.Cell(index + 4, col).Value = sum;
             }
         }
 
@@ -127,21 +139,18 @@ namespace BlazorFormDesigner.BusinessLogic.Services
                 for (int index = 1; index <= answers.Count; index++)
                 {
                     worksheet.Cell(index + 1, 1).Value = answers[index - 1].UserId;
-                    worksheet.Cell(index + 1, 2).Value = WriteOptions(answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single().SelectedOptions);
+                    var answer = answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single();
+                    for (int row = 0; row < answer.SelectedOptions.Count; row++)
+                    {
+                        var isCorrect = calculatePoints(q.Id, answer, form);
+                        worksheet.Cell(index + 1, row + 2).Value = answer.SelectedOptions[row];
+                        if (q.IsCorrected)
+                        {
+                            worksheet.Cell(index + 1, row + 2).Style.Fill.BackgroundColor = isCorrect == 1 ? green : red;
+                        }
+                    }
                 }
             }
-        }
-
-        private string WriteOptions(List<string> selectedOptions)
-        {
-            var result = "";
-
-            for (int i = 0; i < selectedOptions.Count; i++)
-            {
-                result += selectedOptions[i];
-                result += "; ";
-            }
-            return result;
         }
     }
 }

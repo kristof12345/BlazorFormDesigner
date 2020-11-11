@@ -6,9 +6,9 @@ namespace BlazorFormDesigner.Web.Models
     {
         public static readonly string Primary = "#0071BC";
         public static readonly string Secondary = "#0E308E";
-        public static readonly string Error = "red";
+        public static readonly string Error = "#b71c1c";
         public static readonly string Warning = "#ff9800";
-        public static readonly string Success = "green";
+        public static readonly string Success = "#2E7D32";
         public static readonly string Black = "rgb(0, 0, 0)";
         public static readonly string White = "rgb(255, 255, 255)";
         public static readonly string Grey = "rgba(0, 0, 0, 0.54)";
