@@ -28,8 +28,8 @@
                 <p class="validation-message" style="width: 100%; margin-bottom: 10px;">@Error </p>
             }
             <Horizontal>
-                <MatButton Link=@("/myforms") Style=@($"background-color: {Colors.Error}; margin-top: 10px;") Type="button" Raised="true">Cancel</MatButton>
-                <MatButton Type="submit" Style=@($"background-color: {Colors.Success}; margin-top: 10px;") Disabled=@(CurrentQuestion != null) Raised="true">Save changes</MatButton>
+                <MatButton Link=@("/myforms") Type="button" Raised="true" Style="margin-top: 10px;">Cancel</MatButton>
+                <MatButton Type="submit" Disabled=@(CurrentQuestion != null) Raised="true" Style="margin-top: 10px;">Save</MatButton>
             </Horizontal>
         </EditForm>
     </div>

@@ -7,7 +7,7 @@
         {
             <CorrectedOptionView Option=@option OnDelete=@DeleteOption />
         }
-        <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 36px; margin-top: 10px;"Outlined="true">Add option</MatButton>
+        <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
     }
     @if (Type == QuestionType.Text.GetAttributeValue() || Type == QuestionType.Numeric.GetAttributeValue())
     {
@@ -24,7 +24,7 @@ else
         {
             <OptionView Option=@option OnDelete=@DeleteOption />
         }
-        <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 36px; margin-top: 10px;" Outlined="true">Add option</MatButton>
+        <MatButton OnClick=@AddOption Type="button" Style="width: 8%; height: 56px; margin-top: 10px;" Raised="true">Add</MatButton>
     }
 }
 

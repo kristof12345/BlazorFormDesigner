@@ -11,15 +11,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="ClosedXML" Version="0.95.3" />
-    <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.48" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Components\Basic\" />
     <Folder Include="Components\Forms\" />
     <Folder Include="Components\Options\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Components\PieDiagram.razor" />
   </ItemGroup>
 </Project>

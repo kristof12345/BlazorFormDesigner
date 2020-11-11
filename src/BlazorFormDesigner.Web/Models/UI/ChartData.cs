@@ -1,9 +1,10 @@
-﻿namespace BlazorFormDesigner.Web.Models
+﻿using System;
+namespace BlazorFormDesigner.Web.Models.UI
 {
     public class ChartData
     {
-        public string Id { get; set; }
-        public int Data { get; set; }
-        public string Color { get; set; }
+        public ChartData()
+        {
+        }
     }
 }

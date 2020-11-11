@@ -6,8 +6,12 @@
         @if (Question.IsCorrected)
         {
             <Vertical>
-                <PieDiagram Data=@FormatPieData()></PieDiagram>
-                <BarDiagram Data=@FormatBarData()></BarDiagram>
+                <MatBody1>Correct answers: @Details.CorrectAnswers</MatBody1>
+                <MatBody1>Incorrect answers: @Details.IncorrectAnswers</MatBody1>
+                @foreach (var key in Details.Answers.Keys)
+                {
+                    <MatBody1>@key : @Details.Answers[key] </MatBody1>
+                }
             </Vertical>
         }
     }
@@ -29,24 +33,6 @@
     protected override async Task OnParametersSetAsync()
     {
         Details = await AnswerService.GetDetails(FormId, Question.Id);
-    }
-
-    private List<ChartData> FormatPieData()
-    {
-        var data = new List<ChartData>();
-        data.Add(new ChartData { Id = "Correct", Data = Details.CorrectAnswers, Color = "green" });
-        data.Add(new ChartData { Id = "Incorrect", Data = Details.IncorrectAnswers, Color = "red" });
-        return data;
-    }
-
-    private List<ChartData> FormatBarData()
-    {
-        var data = new List<ChartData>();
-        foreach (var item in Details.Answers.Keys.Select((key, index) => new { index, key }))
-        {
-            data.Add(new ChartData { Id = item.key, Data = Details.Answers[item.key], Color = Colors.Palettes[item.index] });
-        }
-        return data;
     }
 
 }
