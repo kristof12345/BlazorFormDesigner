@@ -90,6 +90,22 @@ namespace BlazorFormDesigner.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("{id}")]
+        public async Task<ActionResult> Start([FromRoute] string id)
+        {
+            try
+            {
+                ValidateUser();
+                await FormService.Start(id, User);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+        }
+
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult> Update([FromRoute] string id, FormRequest form)

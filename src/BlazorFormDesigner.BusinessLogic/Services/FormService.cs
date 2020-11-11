@@ -68,6 +68,12 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             return response;
         }
 
+        public async Task Start(string id, User user)
+        {
+            var form = await FormRepository.GetById(id);
+            await UserRepository.RegisterStart(user.Username, id, DateTime.Now.AddMinutes(form.AvailableMinutes));
+        }
+
         private async Task<FormStatus> getStatus(string username, Form form)
         {
             if (form.EndDate < DateTime.Now) return FormStatus.Expired;

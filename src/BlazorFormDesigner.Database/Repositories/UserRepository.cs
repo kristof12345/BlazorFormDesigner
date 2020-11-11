@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using BlazorFormDesigner.BusinessLogic.Exceptions;
 using BlazorFormDesigner.BusinessLogic.Interfaces;
@@ -84,6 +85,7 @@ namespace BlazorFormDesigner.Database.Repositories
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
             if (user == null) throw new InvalidUsernameException();
             if (user.AnsweredForms.Contains(formId) || user.DismissedForms.Contains(formId)) throw new FormException("Already answered or dismissed.");
+            if (user.StartedForms[formId] > DateTime.Now.AddSeconds(15)) throw new FormException("Expired. Too long answer time.");
 
             user.AnsweredForms.Add(formId);
             await users.ReplaceOneAsync(u => u.Username == user.Username, user);
@@ -104,6 +106,15 @@ namespace BlazorFormDesigner.Database.Repositories
             if (user == null) throw new InvalidUsernameException();
 
             user.CreatedForms.Add(formId);
+            await users.ReplaceOneAsync(u => u.Username == user.Username, user);
+        }
+
+        public async Task RegisterStart(string username, string id, DateTime dateTime)
+        {
+            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
+            if (user == null) throw new InvalidUsernameException();
+
+            user.StartedForms.Add(id, dateTime);
             await users.ReplaceOneAsync(u => u.Username == user.Username, user);
         }
     }

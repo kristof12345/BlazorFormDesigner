@@ -1,4 +1,5 @@
 ﻿using BlazorFormDesigner.BusinessLogic.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace BlazorFormDesigner.BusinessLogic.Interfaces
@@ -14,5 +15,6 @@ namespace BlazorFormDesigner.BusinessLogic.Interfaces
         Task RegisterAnswer(string username, string formId);
         Task RegisterDismiss(string username, string formId);
         Task RegisterCreator(string username, string formId);
+        Task RegisterStart(string username, string id, DateTime dateTime);
     }
 }

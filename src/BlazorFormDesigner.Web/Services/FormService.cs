@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System;
 
 namespace BlazorFormDesigner.Web.Services
 {
@@ -32,6 +31,7 @@ namespace BlazorFormDesigner.Web.Services
 
         public async Task<Form> GetById(string id)
         {
+            await AppService.Client.PostAsJsonAsync("form/" + id, "sterted");
             var response = await AppService.Client.GetAsync("form/" + id);
             if (response.IsSuccessStatusCode)
             {

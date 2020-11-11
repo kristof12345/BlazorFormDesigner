@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -23,5 +24,7 @@ namespace BlazorFormDesigner.Database.Entities
         public List<string> DismissedForms { get; set; }
 
         public List<string> CreatedForms { get; set; }
+
+        public Dictionary<string, DateTime> StartedForms { get; set; }
     }
 }
