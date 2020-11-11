@@ -8,12 +8,14 @@
     </AccumulationChartSeriesCollection>
 </SfAccumulationChart>
 
+<HorizontalDiagramLegend Data=@Data />
+
 @code {
 
     [Parameter]
     public List<ChartData> Data { get; set; }
 
     [Parameter]
-    public string Width { get; set; } = "1700px";
+    public string Width { get; set; } = "1400px";
 
 }

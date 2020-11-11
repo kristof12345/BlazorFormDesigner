@@ -119,6 +119,9 @@ namespace BlazorFormDesigner.BusinessLogic.Services
 
         private void CreateQuestionTabs(Form form, List<Response> answers, XLWorkbook workbook)
         {
+            var red = XLColor.FromArgb(246, 201, 207);
+            var green = XLColor.FromArgb(202, 232, 204);
+
             foreach (var q in form.Questions)
             {
                 IXLWorksheet worksheet = workbook.Worksheets.Add(q.Title);
@@ -127,10 +130,15 @@ namespace BlazorFormDesigner.BusinessLogic.Services
                 for (int index = 1; index <= answers.Count; index++)
                 {
                     worksheet.Cell(index + 1, 1).Value = answers[index - 1].UserId;
-                    var options = answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single().SelectedOptions;
-                    for (int row = 0; row < options.Count; row++)
+                    var answer = answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single();
+                    for (int row = 0; row < answer.SelectedOptions.Count; row++)
                     {
-                        worksheet.Cell(index + 1, row + 2).Value = options[row];
+                        var isCorrect = calculatePoints(q.Id, answer, form);
+                        worksheet.Cell(index + 1, row + 2).Value = answer.SelectedOptions[row];
+                        if (q.IsCorrected)
+                        {
+                            worksheet.Cell(index + 1, row + 2).Style.Fill.BackgroundColor = isCorrect == 1 ? green : red;
+                        }
                     }
                 }
             }
