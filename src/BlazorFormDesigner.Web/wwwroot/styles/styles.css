@@ -28,6 +28,10 @@ text {
     margin-right: auto;
 }
 
+.mdc-button--raised:disabled, .mdc-button--unelevated:disabled {
+    background-color: rgba(0,0,0,.12) !important;
+}
+
 .container {
     width: 100%;
     display: flex;

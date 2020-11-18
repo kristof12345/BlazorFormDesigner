@@ -117,11 +117,12 @@ namespace BlazorFormDesigner.BusinessLogic.Services
                 foreach (var q in form.Questions)
                 {
                     var points = calculatePoints(q.Id, answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single(), form);
-                    worksheet.Cell(index + 4, col++).Value = points;
+                    worksheet.Cell(index + 4, col).Value = points;
                     if (q.IsCorrected)
                     {
                         worksheet.Cell(index + 4, col).Style.Fill.BackgroundColor = points == 1 ? green : red;
                     }
+                    col++;
                     sum += points;
                 }
                 worksheet.Cell(index + 4, col).Value = sum;
@@ -134,22 +135,31 @@ namespace BlazorFormDesigner.BusinessLogic.Services
             {
                 IXLWorksheet worksheet = workbook.Worksheets.Add(q.Title);
                 worksheet.Cell(1, 1).Value = "Username";
-                worksheet.Cell(1, 2).Value = "Answer";
+                worksheet.Cell(1, 2).Value = "Point";
+                worksheet.Cell(1, 3).Value = "Answer";
                 for (int index = 1; index <= answers.Count; index++)
                 {
                     worksheet.Cell(index + 1, 1).Value = answers[index - 1].UserId;
                     var answer = answers[index - 1].Answers.Where(a => a.QuestionId == q.Id).Single();
+                    var points = calculatePoints(q.Id, answer, form);
+                    worksheet.Cell(index + 1, 2).Value = points;
+                    worksheet.Cell(index + 1, 2).Style.Fill.BackgroundColor = points == 1 ? green : red;
                     for (int row = 0; row < answer.SelectedOptions.Count; row++)
                     {
-                        var isCorrect = calculatePoints(q.Id, answer, form);
-                        worksheet.Cell(index + 1, row + 2).Value = answer.SelectedOptions[row];
+                        worksheet.Cell(index + 1, row + 3).Value = answer.SelectedOptions[row];
                         if (q.IsCorrected)
                         {
-                            worksheet.Cell(index + 1, row + 2).Style.Fill.BackgroundColor = isCorrect == 1 ? green : red;
+                            worksheet.Cell(index + 1, row + 3).Style.Fill.BackgroundColor = isCorrectOption(q.Id, answer.SelectedOptions[row], form) ? green : red;
                         }
                     }
                 }
             }
+        }
+
+        private static bool isCorrectOption(string questionid, string option, Form form)
+        {
+            var correctAnswer = form.Questions.Where(q => q.Id == questionid).First().Options.Where(o => o.IsCorrect).Select(o => o.Content).ToList();
+            return correctAnswer.Contains(option);
         }
     }
 }

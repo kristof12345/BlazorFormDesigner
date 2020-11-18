@@ -78,7 +78,7 @@
 
     private string ValidateOptions()
     {
-        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Count < 2)
+        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Where(o => !string.IsNullOrWhiteSpace(o.Content)).Count() < 2)
         {
             return "Minimum 2 options required for each question.";
         }
@@ -87,17 +87,17 @@
 
         if (Model.Type == QuestionType.Text.GetAttributeValue() || Model.Type == QuestionType.Numeric.GetAttributeValue())
         {
-            if (Model.Options.Count() != 1) return "This question type requires one correct option.";
+            if (Model.Options.Where(o => !string.IsNullOrWhiteSpace(o.Content)).Count() != 1) return "This question type requires one correct option.";
         }
 
         if (Model.Type == QuestionType.SingleChoice.GetAttributeValue())
         {
-            if (Model.Options.Where(o => o.IsCorrect).Count() != 1) return "This question type requires one correct option.";
+            if (Model.Options.Where(o => !string.IsNullOrWhiteSpace(o.Content)).Where(o => o.IsCorrect).Count() != 1) return "This question type requires one correct option.";
         }
 
         if (Model.Type == QuestionType.MultipleChoice.GetAttributeValue())
         {
-            if (Model.Options.Where(o => o.IsCorrect).Count() < 2) return "This question type requires at least two correct option.";
+            if (Model.Options.Where(o => !string.IsNullOrWhiteSpace(o.Content)).Where(o => o.IsCorrect).Count() < 2) return "This question type requires at least two correct options.";
         }
 
         return null;
@@ -105,7 +105,7 @@
 
     private void InvalidSubmit()
     {
-        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Count < 2)
+        if ((Model.Type == QuestionType.MultipleChoice.GetAttributeValue() || Model.Type == QuestionType.SingleChoice.GetAttributeValue()) && Model.Options.Where(o => !string.IsNullOrWhiteSpace(o.Content)).Count() < 2)
         {
             Error = "Minimum 2 options required for each question.";
         }

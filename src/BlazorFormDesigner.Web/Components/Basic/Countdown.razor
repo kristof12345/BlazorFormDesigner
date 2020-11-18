@@ -1,4 +1,5 @@
-﻿@using System.Threading;
+﻿@using System.Threading
+@implements IDisposable
 
 <h1>@Hours : @Minutes : @Seconds</h1>
 
@@ -15,6 +16,7 @@
     private int Minutes { get; set; } = 10;
     private int Hours { get; set; } = 10;
     private bool sent { get; set; } = false;
+    private Timer timer { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -27,7 +29,7 @@
 
     void StartCountdown()
     {
-        var timer = new Timer(new TimerCallback(_ =>
+        timer = new Timer(new TimerCallback(_ =>
         {
             if (Seconds > 0)
             {
@@ -45,12 +47,17 @@
                 Minutes = 59;
                 Seconds = 59;
             }
-            else if(!sent)
+            else if (!sent)
             {
                 sent = true;
                 InvokeAsync(() => { OnEnd.InvokeAsync("hello"); });
             }
             InvokeAsync(() => { StateHasChanged(); });
         }), null, 1000, 1000);
+    }
+
+    public void Dispose()
+    {
+        timer.Change(Timeout.Infinite, Timeout.Infinite);
     }
 }
