@@ -29,6 +29,7 @@
 
     void StartCountdown()
     {
+        timer?.Change(Timeout.Infinite, Timeout.Infinite);
         timer = new Timer(new TimerCallback(_ =>
         {
             if (Seconds > 0)
