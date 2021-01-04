@@ -1,6 +1,7 @@
 ﻿# BlazorFormDesigner
 
 ## Követelmények
+
 ### Funkcionális követelmények
 Az alkalmazásban lehetőség van személyre szabott formok és online tesztek összeállítására, majd az azokra érkező válaszok adatbázisba való mentésére. Az alkalmazás az alábbi funkciókat támogatja:
 * Form létrehozása, melyhez több kérdés is tartozhat
